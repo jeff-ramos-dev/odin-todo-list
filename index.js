@@ -1,78 +1,96 @@
-function createNewList(title = 'My List') {
-  const count = Object.keys(todoLists).length
+function Lister() {
 
-  const list = [
-    {
+  const todoLists = {
+    "My List": [
+      {
+        "title": "My Title",
+        "description": "My Description",
+        "dueDate": Date().split(' ').splice(1, 3).join(' '),
+        "priority": 1,
+        "complete": false
+      },
+    ]
+  }
+
+  const getLists = () => todoLists
+
+  const createNewList = (title = 'My List') => {
+    const count = Object.keys(todoLists).length
+
+    const list = [
+      {
+        "title": "My Title",
+        "description": "My Description",
+        "dueDate": Date().split(' ').splice(1, 3).join(' '),
+        "priority": 1,
+        "complete": false
+      }
+    ]
+
+    if (title === 'My List' && count > 0) {
+      title += ` ${count + 1}`
+    }
+
+    todoLists[title] = list
+
+    return "List created successfully"
+  }
+
+  const addItem = (list) => {
+
+    const item = {
       "title": "My Title",
       "description": "My Description",
       "dueDate": Date().split(' ').splice(1, 3).join(' '),
       "priority": 1,
       "complete": false
     }
-  ]
 
-  if (title === 'My List') {
-    title += ` ${count + 1}`
+    list.push(item)
+
+    return "Item added successfully"
   }
 
-  todoLists[title] = list
+  const updateItem = (
+    list,
+    index,
+    title = list[index].title,
+    description = list[index].description,
+    dueDate = list[index].dueDate,
+    priority = list[index].priority,
+    complete = list[index].complete
+  ) => {
+    list[index] = {
+      "title": title,
+      "description": description,
+      "dueDate": dueDate,
+      "priority": priority,
+      "complete": complete
+    }
 
-  return "List created successfully"
-}
-
-function addItem(list) {
-
-  const item = {
-    "title": "My Title",
-    "description": "My Description",
-    "dueDate": Date().split(' ').splice(1, 3).join(' '),
-    "priority": 1,
-    "complete": false
+    return 'Item updated successfully'
   }
 
-  list.push(item)
+  const deleteItem = (list, index) => {
 
-  return "Item added successfully"
-}
+    todoLists[list].splice(index, 1)
 
-function updateItem(
-  list,
-  index,
-  title = todoLists[list][index].title,
-  description = todoLists[list][index].description,
-  dueDate = todoLists[list][index].dueDate,
-  priority = todoLists[list][index].priority,
-  complete = todoLists[list][index].complete
-) {
-  todoLists[list][index] = {
-    "title": title,
-    "description": description,
-    "dueDate": dueDate,
-    "priority": priority,
-    "complete": complete
+    return 'Item deleted successfully'
   }
 
-  return 'Item updated successfully'
+  const deleteList = (listName) => {
+    delete todoLists[listName]
+
+    return 'List deleted successfully'
+  }
+
+  return {
+    getLists,
+    createNewList,
+    addItem,
+    updateItem,
+    deleteItem,
+    deleteList,
+  }
 }
 
-function deleteItem(list, index) {
-
-  todoLists[list].splice(index, 1)
-
-  return 'Item deleted successfully'
-}
-
-
-const todoLists = {
-  "My List": [
-    {
-      "title": "My Title",
-      "description": "My Description",
-      "dueDate": Date().split(' ').splice(1, 3).join(' '),
-      "priority": 1,
-      "complete": false
-    },
-  ]
-}
-
-console.log(todoLists)

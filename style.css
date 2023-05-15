@@ -1,0 +1,19 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.task {
+    margin: 20px;
+    color: white;
+    padding: 10px;
+}
+
+.prop {
+    margin-top: 10px;
+}
+
+.list-name {
+    text-align: center;
+}

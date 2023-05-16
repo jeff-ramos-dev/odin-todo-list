@@ -57,6 +57,37 @@ export default function Lister() {
     return "Item added successfully"
   }
 
+  const updateTitle = (item, newTitle) => {
+    item.title = newTitle
+
+    return 'Title updated successfully'
+  }
+
+  const updateDescription = (item, newDesc) => {
+    item.description = newDesc
+
+    return 'Description updated successfully'
+  }
+
+  const updateDueDate = (item, newDate) => {
+    item.dueDate = newDate
+
+    return 'Date updated successfully'
+  }
+
+  const updatePriority = (item, newPriority) => {
+    item.priority = newPriority
+
+    return 'Priority updated successfully'
+  }
+
+  const updateComplete = (item, newComplete) => {
+    item.complete = complete
+  
+    return 'Complete updated successfully'
+  }
+
+
   const updateItem = (
     list,
     index,
@@ -96,6 +127,11 @@ export default function Lister() {
     createNewList,
     addItem,
     updateItem,
+    updateTitle,
+    updateDescription,
+    updateDueDate,
+    updatePriority,
+    updateComplete,
     deleteItem,
     deleteList,
   }

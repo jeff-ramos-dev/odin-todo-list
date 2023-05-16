@@ -1,0 +1,49 @@
+export default function sidebar() {
+    const sidebar = document.createElement('div');
+    sidebar.classList.add('sidebar');
+    const closeBtn = document.createElement('button');
+    closeBtn.type = 'button';
+    closeBtn.textContent = 'X';
+    closeBtn.classList.add('close');
+    const timedListHeader = document.createElement('h2');
+    timedListHeader.classList.add('list-header');
+    timedListHeader.textContent = 'Timed Lists'
+    const timedLists = document.createElement('ul');
+    const today = document.createElement('li');
+    today.classList.add('list');
+    today.textContent = 'Today';
+    const thisWeek = document.createElement('li');
+    thisWeek.classList.add('list');
+    thisWeek.textContent = 'This Week';
+    const thisMonth = document.createElement('li');
+    thisMonth.classList.add('list');
+    thisMonth.textContent = 'This Month';
+    const userListHeader = document.createElement('h2');
+    userListHeader.classList.add('list-header');
+    userListHeader.textContent = 'User Lists';
+    const userLists = document.createElement('ul');
+    const myList = document.createElement('li');
+    myList.classList.add('list');
+    myList.textContent = 'My List';
+    const myList2 = document.createElement('li');
+    myList2.classList.add('list');
+    myList2.textContent = 'My List 2';
+
+    closeBtn.addEventListener('click', e => {
+        sidebar.classList.toggle('show-sidebar');
+    });
+
+    timedListHeader.appendChild(closeBtn);
+    sidebar.appendChild(timedListHeader);
+    sidebar.appendChild(timedLists)
+    timedLists.appendChild(today);
+    timedLists.appendChild(thisWeek);
+    timedLists.appendChild(thisMonth);
+    sidebar.appendChild(userListHeader);
+    sidebar.appendChild(userLists);
+    userLists.appendChild(myList);
+    userLists.appendChild(myList2);
+
+    return { sidebar, today, userListHeader }
+}
+

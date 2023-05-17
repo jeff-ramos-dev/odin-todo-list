@@ -14,10 +14,19 @@ export default function Lister() {
 
   const getAllLists = () => todoLists
 
-  const getToday = () => {
+  const getTodayList = () => {
+    let todayList = []
+    const today = Date().split(' ').splice(1, 3).join(' ')
     for (const list in todoLists) {
-      console.log(list.dueDate)
+      let numOfItems = todoLists[list].length
+      for (let i = 0; i < numOfItems; i++) {
+        const currItem = todoLists[list][i]
+        if (currItem.dueDate === today) {
+          todayList.push(currItem)
+        }
+      }
     }
+    return todayList
   }
 
   const createNewList = (title = 'My List') => {
@@ -82,7 +91,7 @@ export default function Lister() {
   }
 
   const updateComplete = (item, newComplete) => {
-    item.complete = complete
+    item.complete = newComplete
   
     return 'Complete updated successfully'
   }
@@ -123,7 +132,7 @@ export default function Lister() {
 
   return {
     getAllLists,
-    getToday,
+    getTodayList,
     createNewList,
     addItem,
     updateItem,

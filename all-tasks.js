@@ -1,60 +1,51 @@
-import Lister from './Lister.js'
-import todayPage from './today.js'
+export default function allTasks(listOfLists) {
+  const allLists = listOfLists.getAllLists()
 
-function example() {
-  const list = Lister()
-  list.createNewList();
-  list.addItem(list.getAllLists()["My List"])
-  list.updateItem(list.getAllLists()["My List"], 1, "Task for Wednesday", "This is something I don't need to get done rn, but should do in the next couple days", 'May 17 2023', 4, false)
-  list.updateItem(list.getAllLists()["My List 2"], 0, "List 2 Task", "This is something I have to do for List 2", undefined, 2, true)
-  const listContent = list.getAllLists()
-
-  return listContent
-}
-
-
-export default function allTasks() {
-  const list = example()
   const allTaskContainer = document.createElement('div');
   allTaskContainer.classList.add('container');
+
   const today = document.createElement('div');
+
   const todayList = document.createElement('h1');
   todayList.classList.add('list-name')
   todayList.textContent = 'TODAY'
+
   const todayTasks = document.createElement('div');
+
   today.appendChild(todayList);
   today.appendChild(todayTasks);
+
   const currDay = Date().split(' ').splice(1, 3).join(' ');
 
-  for (const key in list) {
-    let curr = list[key]
+  for (const list in allLists) {
+    let curr = allLists[list]
       const listWrapper = document.createElement('div');
       const listName = document.createElement('h1')
       listName.classList.add('list-name');
-      listName.textContent = key
+      listName.textContent = list
       listWrapper.appendChild(listName)
-    for (const l in curr) {
+    for (const item in curr) {
       let isToday = false
       const task = document.createElement('div');
       task.classList.add('task');
       const taskTitle = document.createElement('p');
       taskTitle.classList.add('title', 'prop');
-      taskTitle.textContent += curr[l]['title']
+      taskTitle.textContent += curr[item].title
       const taskDesc = document.createElement('p');
       taskDesc.classList.add('desc', 'prop');
-      taskDesc.textContent += curr[l]['description']
+      taskDesc.textContent += curr[item].description
       const taskDueDate = document.createElement('p');
       taskDueDate.classList.add('date', 'prop');
-      taskDueDate.textContent += curr[l]['dueDate']
+      taskDueDate.textContent += curr[item].dueDate
       const taskPriority = document.createElement('p');
       taskPriority.classList.add('priority', 'prop');
-      taskPriority.textContent += `Priority: ${curr[l]['priority']}`
+      taskPriority.textContent += `Priority: ${curr[item].priority}`
       const taskComplete = document.createElement('input');
       taskComplete.classList.add('checkbox', 'prop');
       taskComplete.type = 'checkbox';
-      taskComplete.checked = curr[l]['complete']
+      taskComplete.checked = curr[item].complete
 
-      task.style.backgroundColor = curr[l]['complete'] ? '#0f6e22' : '#7a0610'
+      task.style.backgroundColor = curr[item].complete ? '#0f6e22' : '#7a0610'
       task.appendChild(taskTitle);
       task.appendChild(taskDesc);
       task.appendChild(taskDueDate);
@@ -63,23 +54,23 @@ export default function allTasks() {
       listWrapper.appendChild(task)
       allTaskContainer.appendChild(listWrapper)
 
-      if (currDay === curr[l]['dueDate']) {
+      if (currDay === curr[item].dueDate) {
         isToday = true
         const todayTask = document.createElement('div');
         todayTask.classList.add('task')
         const todayTitle = document.createElement('p');
         todayTitle.classList.add('title', 'prop');
-        todayTitle.textContent = curr[l]['title'];
+        todayTitle.textContent = curr[item].title;
         const todayDesc = document.createElement('p');
         todayDesc.classList.add('desc', 'prop');
-        todayDesc.textContent = curr[l]['description'];
-        todayTask.style.backgroundColor = curr[l]['complete'] ? '#0f6e22' : '#7a0610';
+        todayDesc.textContent = curr[item].description;
+        todayTask.style.backgroundColor = curr[item].complete ? '#0f6e22' : '#7a0610';
 
-        taskComplete.addEventListener('input', e => {
-          curr[l]['complete'] = e.target.checked
-          task.style.backgroundColor = e.target.checked ? '#0f6e22' : '#7a0610'
-          if (currDay === curr[l]['dueDate']) {
-            todayTask.style.backgroundColor = e.target.checked ? '#0f6e22' : '#7a0610'
+        task.addEventListener('click', e => {
+          listOfLists.updateComplete(curr[item], !curr[item].complete)
+          task.style.backgroundColor = curr[item].complete ? '#0f6e22' : '#7a0610'
+          if (currDay === curr[item].dueDate) {
+            todayTask.style.backgroundColor = curr[item].complete ? '#0f6e22' : '#7a0610'
           }
         })
 
@@ -89,14 +80,14 @@ export default function allTasks() {
       } 
 
       if (!isToday) {
-        taskComplete.addEventListener('input', e => {
-          curr[l]['complete'] = e.target.checked
-          task.style.backgroundColor = e.target.checked ? '#0f6e22' : '#7a0610'
+        task.addEventListener('click', e => {
+          listOfLists.updateComplete(curr[item], !curr[item].complete)
+          task.style.backgroundColor = curr[item].complete ? '#0f6e22' : '#7a0610'
         }) 
       }
     }
   }
   allTaskContainer.appendChild(today);
 
-  return { allTaskContainer: allTaskContainer, lists: list }
+  return allTaskContainer
 }

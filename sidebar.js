@@ -5,10 +5,8 @@ export default function sidebar() {
     closeBtn.type = 'button';
     closeBtn.textContent = 'X';
     closeBtn.classList.add('close');
-    const timedListHeader = document.createElement('h2');
-    timedListHeader.classList.add('list-header');
-    timedListHeader.textContent = 'Timed Lists'
     const timedLists = document.createElement('ul');
+    timedLists.classList.add('timed-list-ul')
     const today = document.createElement('li');
     today.classList.add('list');
     today.textContent = 'Today';
@@ -32,9 +30,13 @@ export default function sidebar() {
     closeBtn.addEventListener('click', e => {
         sidebar.classList.toggle('show-sidebar');
     });
+    document.addEventListener('click', e => {
+        if (!sidebar.contains(e.target) && !e.target.classList.contains('menu-btn')) {
+            sidebar.classList.toggle('show-sidebar');
+        }
+    })
 
-    timedListHeader.appendChild(closeBtn);
-    sidebar.appendChild(timedListHeader);
+    sidebar.appendChild(closeBtn);
     sidebar.appendChild(timedLists)
     timedLists.appendChild(today);
     timedLists.appendChild(thisWeek);

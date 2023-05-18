@@ -40,17 +40,13 @@ export default function allTasks(listOfLists) {
       const taskPriority = document.createElement('p');
       taskPriority.classList.add('priority', 'prop');
       taskPriority.textContent += `Priority: ${curr[item].priority}`
-      const taskComplete = document.createElement('input');
-      taskComplete.classList.add('checkbox', 'prop');
-      taskComplete.type = 'checkbox';
-      taskComplete.checked = curr[item].complete
+
 
       task.style.backgroundColor = curr[item].complete ? '#0f6e22' : '#7a0610'
       task.appendChild(taskTitle);
       task.appendChild(taskDesc);
       task.appendChild(taskDueDate);
       task.appendChild(taskPriority);
-      task.appendChild(taskComplete);
       listWrapper.appendChild(task)
       allTaskContainer.appendChild(listWrapper)
 

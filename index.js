@@ -33,23 +33,29 @@ function createExample() {
 const exampleList = createExample()
 
 let today = todayPage(exampleList);
-today.classList.add('today-page');
+today.classList.add('today-page', 'page');
 today.style.display = 'none';
 
 let allTasks = allTasksContainer(exampleList)
-allTasks.classList.add('allTasks-page');
+allTasks.classList.add('allTasks-page', 'page');
 allTasks.style.display = 'none';
 const menu = sidebar();
 
-const menuBtn = document.createElement('button');
-menuBtn.type = 'button';
-menuBtn.textContent = 'Menu';
+const menuBtn = document.createElement('img');
+menuBtn.classList.add('menu-btn');
+menuBtn.src = './images/menu-icon.png';
 
 menuBtn.addEventListener('click', e => {
   menu.sidebar.classList.toggle('show-sidebar');
 })
 
 menu.userListHeader.addEventListener('click', e => {
+  if (document.querySelector('.today-page')) {
+    document.body.removeChild(document.querySelector('.today-page'))
+  } else if (document.querySelector('.allTasks-page')) {
+    document.body.removeChild(document.querySelector('.allTasks-page'))
+  }
+
   allTasks = allTasksContainer(exampleList)
   allTasks.classList.add('allTasks-page');
   allTasks.style.display = 'block'
@@ -58,6 +64,12 @@ menu.userListHeader.addEventListener('click', e => {
 })
 
 menu.today.addEventListener('click', e => {
+  if (document.querySelector('.today-page')) {
+    document.body.removeChild(document.querySelector('.today-page'))
+  } else if (document.querySelector('.allTasks-page')) {
+    document.body.removeChild(document.querySelector('.allTasks-page'))
+  }
+
   today = todayPage(exampleList);
   today.classList.add('today-page');
   today.style.display = 'block'

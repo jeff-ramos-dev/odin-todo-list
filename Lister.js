@@ -26,7 +26,27 @@ export default function Lister() {
         }
       }
     }
+    todayList.sort()
     return todayList
+  }
+
+  const getMonthList = () => {
+    let monthList = []
+    const month = Date().split(' ').splice(1, 1).join('')
+    for (const list in todoLists) {
+      let numOfItems = todoLists[list].length
+      for (let i = 0; i < numOfItems; i++) {
+        const currItem = todoLists[list][i]
+        if (currItem.dueDate.split(' ')[0] === month) {
+          monthList.push(currItem)
+        }
+      }
+    }
+    function compare(day1, day2) {
+      return day1 === day2 ? 0 : day1 > day2 ? 1 : -1
+    }
+    monthList.sort((a, b) => compare(a.dueDate.split(' ')[1], b.dueDate.split(' ')[1]))
+    return monthList
   }
 
   const createNewList = (title = 'My List') => {
@@ -133,6 +153,7 @@ export default function Lister() {
   return {
     getAllLists,
     getTodayList,
+    getMonthList,
     createNewList,
     addItem,
     updateItem,

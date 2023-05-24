@@ -46,6 +46,6 @@ export default function sidebar() {
     userLists.appendChild(myList);
     userLists.appendChild(myList2);
 
-    return { sidebar, today, userListHeader }
+    return { sidebar, today, thisMonth, userListHeader }
 }
 

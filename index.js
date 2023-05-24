@@ -102,7 +102,7 @@ menu.today.addEventListener('click', e => {
 
 menu.thisMonth.addEventListener('click', e => {
   if (document.querySelector('.month-page')) {
-    document.body.remove(Child(document.querySelector('.month-page')));
+    document.body.removeChild((document.querySelector('.month-page')));
   } else if (document.querySelector('.today-page')) {
     document.body.removeChild(document.querySelector('.today-page'));
   } else if (document.querySelector('.allTasks-page')) {

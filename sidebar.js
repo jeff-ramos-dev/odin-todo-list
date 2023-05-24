@@ -31,7 +31,7 @@ export default function sidebar() {
         sidebar.classList.toggle('show-sidebar');
     });
     document.addEventListener('click', e => {
-        if (!sidebar.contains(e.target) && !e.target.classList.contains('menu-btn')) {
+        if (!sidebar.contains(e.target) && !e.target.classList.contains('menu-btn') && sidebar.classList.contains('show-sidebar')) {
             sidebar.classList.toggle('show-sidebar');
         }
     })

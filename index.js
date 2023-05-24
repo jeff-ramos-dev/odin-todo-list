@@ -5,28 +5,25 @@ import allTasksContainer from './all-tasks.js'
 
 function createExample() {
   const list = Lister()
-  list.createNewList();
-  list.addItem(list.getAllLists()["My List"])
-  list.updateItem(
-    list.getAllLists()["My List"], 
-    1, 
-    "Task for Friday",
-    "This is something I don't need to get done rn, but should do in the next couple days", 
-    'May 19 2023', 
-    4, 
-    false
-  )
-  list.updateItem(
-    list.getAllLists()["My List 2"],
-    0, 
-    "List 2 Task",
-    "This is something I have to do for List 2", 
-    undefined, 
-    2, 
-    true
-  )
-  console.log(list.getTodayList())
-
+  for (let i = 0; i < 4; i++) {
+    if (i > 0) {
+      list.createNewList();
+      let currList = list.getAllLists()[`My List ${i + 1}`];
+      list.deleteItem(`My List ${i + 1}`, 0);
+      for (let j = 0; j < 5; j++) {
+        list.addItem(currList)
+        list.updateItem(
+          currList,
+          j,
+          undefined,
+          undefined,
+          `May ${24 + j} 2023`,
+          j,
+          false
+        )
+      }
+    }
+  }
   return list
 }
 
@@ -39,8 +36,8 @@ today.style.display = 'none';
 let allTasks = allTasksContainer(exampleList)
 allTasks.classList.add('allTasks-page', 'page');
 allTasks.style.display = 'none';
-const menu = sidebar();
 
+const menu = sidebar();
 const menuBtn = document.createElement('img');
 menuBtn.classList.add('menu-btn');
 menuBtn.src = './images/menu-icon.png';
@@ -76,6 +73,7 @@ menu.today.addEventListener('click', e => {
   allTasks.style.display = 'none'
   document.body.appendChild(today);
 })
+
 
 document.body.appendChild(menu.sidebar);
 document.body.appendChild(menuBtn);

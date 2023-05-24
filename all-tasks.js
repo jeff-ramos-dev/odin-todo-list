@@ -4,17 +4,6 @@ export default function allTasks(listOfLists) {
   const allTaskContainer = document.createElement('div');
   allTaskContainer.classList.add('container');
 
-  const today = document.createElement('div');
-
-  const todayList = document.createElement('h1');
-  todayList.classList.add('list-name')
-  todayList.textContent = 'TODAY'
-
-  const todayTasks = document.createElement('div');
-
-  today.appendChild(todayList);
-  today.appendChild(todayTasks);
-
   const currDay = Date().split(' ').splice(1, 3).join(' ');
 
   for (const list in allLists) {
@@ -25,7 +14,6 @@ export default function allTasks(listOfLists) {
       listName.textContent = list
       listWrapper.appendChild(listName)
     for (const item in curr) {
-      let isToday = false
       const task = document.createElement('div');
       task.classList.add('task');
       const taskTitle = document.createElement('p');
@@ -47,43 +35,21 @@ export default function allTasks(listOfLists) {
       task.appendChild(taskDesc);
       task.appendChild(taskDueDate);
       task.appendChild(taskPriority);
-      listWrapper.appendChild(task)
-      allTaskContainer.appendChild(listWrapper)
+      listWrapper.appendChild(task);
+      allTaskContainer.appendChild(listWrapper);
 
       if (currDay === curr[item].dueDate) {
-        isToday = true
-        const todayTask = document.createElement('div');
-        todayTask.classList.add('task')
-        const todayTitle = document.createElement('p');
-        todayTitle.classList.add('title', 'prop');
-        todayTitle.textContent = curr[item].title;
-        const todayDesc = document.createElement('p');
-        todayDesc.classList.add('desc', 'prop');
-        todayDesc.textContent = curr[item].description;
-        todayTask.style.backgroundColor = curr[item].complete ? '#0f6e22' : '#7a0610';
-
-        task.addEventListener('click', e => {
-          listOfLists.updateComplete(curr[item], !curr[item].complete)
-          task.style.backgroundColor = curr[item].complete ? '#0f6e22' : '#7a0610'
-          if (currDay === curr[item].dueDate) {
-            todayTask.style.backgroundColor = curr[item].complete ? '#0f6e22' : '#7a0610'
-          }
-        })
-
-        todayTask.appendChild(todayTitle);
-        todayTask.appendChild(todayDesc);
-        today.appendChild(todayTask)
-      } 
-
-      if (!isToday) {
-        task.addEventListener('click', e => {
-          listOfLists.updateComplete(curr[item], !curr[item].complete)
-          task.style.backgroundColor = curr[item].complete ? '#0f6e22' : '#7a0610'
-        }) 
+        const todayMarker = document.createElement('p');
+        todayMarker.classList.add('marker');
+        todayMarker.textContent = 'Today';
+        task.appendChild(todayMarker);
       }
+
+        task.addEventListener('click', e => {
+          listOfLists.updateComplete(curr[item], !curr[item].complete);
+          task.style.backgroundColor = curr[item].complete ? '#0f6e22' : '#7a0610';
+        })
     }
   }
-  allTaskContainer.appendChild(today);
-
   return allTaskContainer
 }

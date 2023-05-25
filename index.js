@@ -116,6 +116,10 @@ menu.thisMonth.addEventListener('click', e => {
   allTasks.style.display = 'none'
   document.body.appendChild(month);
 });
-
+const title = document.createElement('h1');
+title.textContent = 'Lister'
+title.classList.add('heading')
+const header = document.querySelector('.header')
 document.body.appendChild(menu.sidebar);
-document.body.appendChild(menuBtn);
+header.appendChild(menuBtn);
+header.appendChild(title)

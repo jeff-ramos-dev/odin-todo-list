@@ -5,7 +5,7 @@ export default function Lister() {
       {
         "title": "My Title",
         "description": "My Description",
-        "dueDate": Date().split(' ').splice(1, 3).join(' '),
+        "dueDate": Date().split(' ').splice(0, 4).join(' '),
         "priority": 1,
         "complete": false
       },
@@ -16,7 +16,7 @@ export default function Lister() {
 
   const getTodayList = () => {
     let todayList = []
-    const today = Date().split(' ').splice(1, 3).join(' ')
+    const today = Date().split(' ').splice(0, 4).join(' ')
     for (const list in todoLists) {
       let numOfItems = todoLists[list].length
       for (let i = 0; i < numOfItems; i++) {
@@ -28,6 +28,28 @@ export default function Lister() {
     }
     todayList.sort()
     return todayList
+  }
+
+  const getWeekList = () => {
+    let weekList = []
+    const dayName = Date().split(' ').splice(0, 1).join('')
+    const dayNumber = Date().split(' ').splice(2, 1).join('')
+    const month = Date().split(' ').splice(1, 1).join('')
+    const year = Date().split(' ').splice(3, 1).join('')
+    for (const list in todoLists) {
+      let numOfItems = todoLists[list].length
+      for (let i = 0; i < numOfItems; i++) {
+        const currItem = todoLists[list][i]
+        const currItemYear = currItem.dueDate.split(' ')[3]
+        const currItemMonth = currItem.dueDate.split(' ')[1]
+        const currItemDayNumber = currItem.dueDate.split(' ')[2]
+        const currItemDayName = currItem.dueDate.split(' ')[0]
+        }
+        weekList.push(currItem)
+      }
+    const week = Date().split(' ').splice()
+
+    return weekList
   }
 
   const getMonthList = () => {
@@ -45,7 +67,7 @@ export default function Lister() {
     function compare(day1, day2) {
       return day1 === day2 ? 0 : day1 > day2 ? 1 : -1
     }
-    monthList.sort((a, b) => compare(a.dueDate.split(' ')[1], b.dueDate.split(' ')[1]))
+    monthList.sort((a, b) => compare(a.dueDate.split(' ')[2], b.dueDate.split(' ')[2]))
     return monthList
   }
 
@@ -56,7 +78,7 @@ export default function Lister() {
       {
         "title": "My Title",
         "description": "My Description",
-        "dueDate": Date().split(' ').splice(1, 3).join(' '),
+        "dueDate": Date().split(' ').splice(0, 4).join(' '),
         "priority": 1,
         "complete": false
       }
@@ -76,7 +98,7 @@ export default function Lister() {
     const item = {
       "title": "My Title",
       "description": "My Description",
-      "dueDate": Date().split(' ').splice(1, 3).join(' '),
+      "dueDate": Date().split(' ').splice(0, 4).join(' '),
       "priority": 1,
       "complete": false
     }
@@ -154,6 +176,7 @@ export default function Lister() {
     getAllLists,
     getTodayList,
     getMonthList,
+    getWeekList,
     createNewList,
     addItem,
     updateItem,

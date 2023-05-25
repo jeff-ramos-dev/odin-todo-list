@@ -4,7 +4,7 @@ export default function allTasks(listOfLists) {
   const allTaskContainer = document.createElement('div');
   allTaskContainer.classList.add('container');
 
-  const currDay = Date().split(' ').splice(1, 3).join(' ');
+  const currDay = Date().split(' ').splice(0, 4).join(' ');
 
   for (const list in allLists) {
     let curr = allLists[list]

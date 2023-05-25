@@ -1,4 +1,5 @@
 import todayPage from './today.js'
+import weekPage from './week.js'
 import monthPage from './month.js'
 import sidebar from './sidebar.js'
 import Lister from './Lister.js'
@@ -18,8 +19,8 @@ function createExample() {
           j,
           `My Title ${j + 1}`,
           `My Description ${j + 1}`,
-          `May ${24 + j} 2023`,
-          j + 1,
+          `${j === 0 ? 'Thu' : j === 1 ? 'Fri' : j === 2 ? 'Sat' : j === 3 ? 'Sun' : 'Mon'} ${Date().split(' ')[1]} ${parseInt(Date().split(' ')[2]) + j} ${Date().split(' ')[3]}`,
+          j,
           false
         );
       };
@@ -53,6 +54,10 @@ let today = todayPage(exampleList);
 today.classList.add('today-page', 'page');
 today.style.display = 'none';
 
+let week = weekPage(exampleList);
+week.classList.add('week-page', 'page');
+week.style.display = 'none';
+
 let month = monthPage(exampleList);
 month.classList.add('month-page', 'page');
 month.style.display = 'none';
@@ -61,7 +66,7 @@ let allTasks = allTasksContainer(exampleList);
 allTasks.classList.add('allTasks-page', 'page');
 allTasks.style.display = 'none';
 
-const menu = sidebar();
+const menu = sidebar(exampleList);
 const menuBtn = document.createElement('img');
 menuBtn.classList.add('menu-btn');
 menuBtn.src = './images/menu-icon.png';
@@ -70,56 +75,5 @@ menuBtn.addEventListener('click', e => {
   menu.sidebar.classList.toggle('show-sidebar');
 });
 
-menu.userListHeader.addEventListener('click', e => {
-  if (document.querySelector('.today-page')) {
-    document.body.removeChild(document.querySelector('.today-page'));
-  } else if (document.querySelector('.allTasks-page')) {
-    document.body.removeChild(document.querySelector('.allTasks-page'));
-  };
-
-  allTasks = allTasksContainer(exampleList);
-  allTasks.classList.add('allTasks-page');
-  allTasks.style.display = 'block';
-  today.style.display = 'none';
-  month.style.display = 'none';
-  document.body.appendChild(allTasks);
-});
-
-menu.today.addEventListener('click', e => {
-  if (document.querySelector('.today-page')) {
-    document.body.removeChild(document.querySelector('.today-page'));
-  } else if (document.querySelector('.allTasks-page')) {
-    document.body.removeChild(document.querySelector('.allTasks-page'));
-  };
-
-  today = todayPage(exampleList);
-  today.classList.add('today-page');
-  today.style.display = 'block';
-  allTasks.style.display = 'none';
-  month.style.display = 'none';
-  document.body.appendChild(today);
-});
-
-menu.thisMonth.addEventListener('click', e => {
-  if (document.querySelector('.month-page')) {
-    document.body.removeChild((document.querySelector('.month-page')));
-  } else if (document.querySelector('.today-page')) {
-    document.body.removeChild(document.querySelector('.today-page'));
-  } else if (document.querySelector('.allTasks-page')) {
-    document.body.removeChild(document.querySelector('.allTasks-page'));
-  };
-
-  month = monthPage(exampleList);
-  month.classList.add('month-page');
-  month.style.display = 'block';
-  today.style.display = 'none';
-  allTasks.style.display = 'none'
-  document.body.appendChild(month);
-});
-const title = document.createElement('h1');
-title.textContent = 'Lister'
-title.classList.add('heading')
-const header = document.querySelector('.header')
 document.body.appendChild(menu.sidebar);
-header.appendChild(menuBtn);
-header.appendChild(title)
+document.body.appendChild(menuBtn);

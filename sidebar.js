@@ -1,4 +1,10 @@
-export default function sidebar() {
+import singleList from './singleList.js'
+import todayPage from './today.js'
+import weekPage from './week.js'
+import monthPage from './month.js'
+import allTasks from './all-tasks.js'
+
+export default function sidebar(listOfLists) {
   const sidebar = document.createElement('div');
   sidebar.classList.add('sidebar');
   const closeBtn = document.createElement('button');
@@ -10,23 +16,83 @@ export default function sidebar() {
   const today = document.createElement('li');
   today.classList.add('list');
   today.textContent = 'Today';
+  today.addEventListener('click', e=> {
+    document.querySelectorAll('.page').forEach(page => {
+      if (page) {
+        document.body.removeChild(page);
+      }
+    })
+
+    const todayRoute = todayPage(listOfLists);
+    todayRoute.classList.add('today-page', 'page');
+    todayRoute.style.display = 'block';
+    document.body.appendChild(todayRoute);
+  })
   const thisWeek = document.createElement('li');
   thisWeek.classList.add('list');
   thisWeek.textContent = 'This Week';
+  thisWeek.addEventListener('click', e=> {
+    document.querySelectorAll('.page').forEach(page => {
+      if (page) {
+        document.body.removeChild(page);
+      }
+    })
+
+    const weekRoute = weekPage(listOfLists);
+    weekRoute.classList.add('week-page', 'page');
+    weekRoute.style.display = 'block';
+    document.body.appendChild(weekRoute);
+  })
   const thisMonth = document.createElement('li');
   thisMonth.classList.add('list');
   thisMonth.textContent = 'This Month';
+  thisMonth.addEventListener('click', e=> {
+    document.querySelectorAll('.page').forEach(page => {
+      if (page) {
+        document.body.removeChild(page);
+      }
+    })
+
+    const monthRoute = monthPage(listOfLists);
+    monthRoute.classList.add('month-page', 'page');
+    monthRoute.style.display = 'block';
+    document.body.appendChild(monthRoute);
+  })
   const userListHeader = document.createElement('h2');
   userListHeader.classList.add('list-header');
   userListHeader.textContent = 'User Lists';
-  const userLists = document.createElement('ul');
-  const myList = document.createElement('li');
-  myList.classList.add('list');
-  myList.textContent = 'My List';
-  const myList2 = document.createElement('li');
-  myList2.classList.add('list');
-  myList2.textContent = 'My List 2';
+  userListHeader.addEventListener('click', e=> {
+    document.querySelectorAll('.page').forEach(page => {
+      if (page) {
+        document.body.removeChild(page);
+      }
+    })
 
+    const allTasksRoute = allTasks(listOfLists);
+    allTasksRoute.classList.add('allTasks-page', 'page');
+    allTasksRoute.style.display = 'block';
+    document.body.appendChild(allTasksRoute);
+  })
+  const userLists = document.createElement('ul');
+  for (const list in listOfLists.getAllLists()) {
+    const userList = document.createElement('li');
+    userList.classList.add('list');
+    userList.textContent = list; 
+    userList.addEventListener('click', e=> {
+      console.log('clicked ', list)
+      document.querySelectorAll('.page').forEach(page => {
+        if (page) {
+          document.body.removeChild(page);
+        }
+      })
+
+      const listPage = singleList(listOfLists, list);
+      listPage.classList.add('list-page', 'page');
+      listPage.style.display = 'block';
+      document.body.appendChild(listPage);
+    })
+    userLists.appendChild(userList);
+  }
   closeBtn.addEventListener('click', e => {
     sidebar.classList.toggle('show-sidebar');
   });
@@ -41,8 +107,6 @@ export default function sidebar() {
   sidebar.appendChild(closeBtn);
   sidebar.appendChild(userListHeader);
   sidebar.appendChild(userLists);
-  userLists.appendChild(myList);
-  userLists.appendChild(myList2);
   sidebar.appendChild(divider);
   sidebar.appendChild(timedLists);
   timedLists.appendChild(today);

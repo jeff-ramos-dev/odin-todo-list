@@ -1,5 +1,4 @@
 export default function weekPage(listOfLists) {
-  const weekList = listOfLists.getWeekList()
 
   const title = document.createElement('h1');
   title.textContent = 'THIS WEEK'

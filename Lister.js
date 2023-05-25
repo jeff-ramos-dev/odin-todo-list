@@ -59,7 +59,7 @@ export default function Lister() {
       let numOfItems = todoLists[list].length
       for (let i = 0; i < numOfItems; i++) {
         const currItem = todoLists[list][i]
-        if (currItem.dueDate.split(' ')[0] === month) {
+        if (currItem.dueDate.split(' ')[1] === month) {
           monthList.push(currItem)
         }
       }

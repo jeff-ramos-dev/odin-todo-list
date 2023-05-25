@@ -113,6 +113,5 @@ export default function sidebar(listOfLists) {
   timedLists.appendChild(thisWeek);
   timedLists.appendChild(thisMonth);
 
-  return { sidebar, today, thisMonth, userListHeader }
+  return { sidebar }
 }
-

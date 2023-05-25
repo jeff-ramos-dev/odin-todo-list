@@ -22,9 +22,20 @@ export default function monthPage(listOfLists) {
 
         monthTask.style.backgroundColor = monthList[item].complete ? '#0f6e22': '#7a0610';
         monthTask.addEventListener('click', e => {
+          if (e.target.localName === 'p' || e.target.localName === 'select') {
+            return
+          }
             listOfLists.updateComplete(monthList[item], !monthList[item].complete)
             monthTask.style.backgroundColor = monthList[item].complete ? '#0f6e22' : '#7a0610'
         })
+        const currDay = Date().split(' ').splice(1, 3).join(' ');
+        if (currDay === monthList[item].dueDate) {
+            const todayMarker = document.createElement('p');
+            todayMarker.classList.add('marker');
+            todayMarker.textContent = 'Today';
+            monthTask.appendChild(todayMarker);
+        }
+
         monthTask.appendChild(monthTitle);
         monthTask.appendChild(monthDesc);
         monthTask.appendChild(monthPriority);

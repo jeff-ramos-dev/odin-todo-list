@@ -17,6 +17,7 @@ body {
 
 .prop {
     margin-top: 10px;
+    width: fit-content;
 }
 
 .list-name {

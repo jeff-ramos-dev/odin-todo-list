@@ -8,11 +8,11 @@ export default function allTasks(listOfLists) {
 
   for (const list in allLists) {
     let curr = allLists[list]
-      const listWrapper = document.createElement('div');
-      const listName = document.createElement('h1')
-      listName.classList.add('list-name');
-      listName.textContent = list
-      listWrapper.appendChild(listName)
+    const listWrapper = document.createElement('div');
+    const listName = document.createElement('h1')
+    listName.classList.add('list-name');
+    listName.textContent = list
+    listWrapper.appendChild(listName)
     for (const item in curr) {
       const task = document.createElement('div');
       task.classList.add('task');
@@ -49,9 +49,10 @@ export default function allTasks(listOfLists) {
       taskPriority.appendChild(taskPriorityOption3)
       taskPriority.appendChild(taskPriorityOption4)
       taskPriority.appendChild(taskPriorityOption5)
-      taskPriority.selectedIndex = curr[item].priority
+      taskPriority.selectedIndex = curr[item].priority - 1
       taskPriority.classList.add('priority', 'prop');
-      taskPriority.addEventListener('onchange', e => {
+      taskPriority.addEventListener('change', e => {
+        console.log(e.target.value)
         listOfLists.updatePriority(curr[item], e.target.value)
       })
 
@@ -71,13 +72,13 @@ export default function allTasks(listOfLists) {
         task.appendChild(todayMarker);
       }
 
-        task.addEventListener('click', e => {
-          if (e.target.localName === 'p' || e.target.localName === 'select') {
-            return
-          }
-          listOfLists.updateComplete(curr[item], !curr[item].complete);
-          task.style.backgroundColor = curr[item].complete ? '#0f6e22' : '#7a0610';
-        })
+      task.addEventListener('click', e => {
+        if (e.target.localName === 'p' || e.target.localName === 'select') {
+          return
+        }
+        listOfLists.updateComplete(curr[item], !curr[item].complete);
+        task.style.backgroundColor = curr[item].complete ? '#0f6e22' : '#7a0610';
+      })
     }
   }
   return allTaskContainer

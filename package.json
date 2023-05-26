@@ -1,20 +1,32 @@
 {
+  "name": "odin-todo-list",
+  "version": "1.0.0",
+  "repository": {
+    "url": "git+https://github.com/jeff-ramos-dev/odin-todo-list.git"
+  },
+  "description": "",
+  "main": "index.js",
   "private": "true",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "webpack serve --open",
-    "build": "webpack"
+    "build": "webpack",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
+  "keywords": [],
+  "author": "Jeff Ramos",
   "license": "MIT",
-  "dependencies": {
-    "date-fns": "^2.30.0"
-  },
   "devDependencies": {
     "css-loader": "^6.7.4",
+    "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^5.5.1",
     "style-loader": "^3.3.3",
     "webpack": "^5.84.1",
     "webpack-cli": "^5.1.1",
     "webpack-dev-server": "^4.15.0"
+  },
+  "dependencies": {
+    "date-fns": "^2.30.0"
   }
 }

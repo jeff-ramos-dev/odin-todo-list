@@ -1,10 +1,8 @@
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const ContextReplacementPlugin = require('context-replacement-plugin');
-// const supportedLocales = require('./datefns-config.js');
 const path = require('path');
 
 module.exports = {
-  mode: 'development',
+  mode: 'production',
   entry: './src/index.js',
   devServer: {
     static: './dist',
@@ -13,10 +11,6 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'To-Do-List',
     }),
-    // new ContextReplacementPlugin(
-    //     /^date-fns[/\\]locale$/,
-    //     new RegExp(`\\.[/\\\\](${supportedLocales.join('|')})[/\\\\]index\\.js$`)
-    // ),
   ],
   output: {
     filename: 'bundle.js',

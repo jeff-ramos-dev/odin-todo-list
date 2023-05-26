@@ -1,6 +1,6 @@
-import todayPage from '../today.js'
-import weekPage from '../week.js'
-import monthPage from '../month.js'
+import todayPage from '../time-lists/today.js'
+import weekPage from '../time-lists/week.js'
+import monthPage from '../time-lists/month.js'
 import sidebar from '../sidebar.js'
 import Lister from '../Lister.js'
 import allTasksContainer from '../all-tasks.js'
@@ -29,7 +29,7 @@ function createExample() {
           j,
           `My Title ${j + 1}`,
           `My Description ${j + 1}`,
-          `${j === 0 ? 'Thu' : j === 1 ? 'Fri' : j === 2 ? 'Sat' : j === 3 ? 'Sun' : 'Mon'} ${Date().split(' ')[1]} ${parseInt(Date().split(' ')[2]) + j} ${Date().split(' ')[3]}`,
+          new Date(2023, 4, j + 26),
           j + 1,
           false
         );
@@ -41,7 +41,7 @@ function createExample() {
     3,
     "Different Title",
     "Different Description",
-    "Tue June 6 2023",
+    new Date(2023, 5, 6),
     3,
     true
   );
@@ -50,7 +50,7 @@ function createExample() {
     3,
     "Different Title",
     "Different Description",
-    "Sat May 6 2023",
+    new Date(2023, 4, 6),
     2,
     true
   );
@@ -79,7 +79,7 @@ allTasks.style.display = 'none';
 const menu = sidebar(exampleList);
 const menuBtn = document.createElement('img');
 menuBtn.classList.add('menu-btn');
-menuBtn.src = menuIcon 
+menuBtn.src = menuIcon
 
 menuBtn.addEventListener('click', e => {
   menu.sidebar.classList.toggle('show-sidebar');

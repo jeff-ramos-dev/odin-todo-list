@@ -1,3 +1,8 @@
+import differenceInCalendarDays from 'date-fns/differenceInCalendarDays'
+import differenceInCalendarWeeks from 'date-fns/differenceInCalendarWeeks'
+import differenceInCalendarMonths from 'date-fns/differenceInCalendarMonths'
+import isAfter from 'date-fns/isAfter'
+
 export default function Lister() {
 
   const todoLists = {
@@ -5,23 +10,34 @@ export default function Lister() {
       {
         "title": "My Title",
         "description": "My Description",
-        "dueDate": Date().split(' ').splice(0, 4).join(' '),
+        "dueDate": new Date(),
         "priority": 1,
         "complete": false
       },
     ]
   }
 
-  const getAllLists = () => todoLists
+  function compare(date1, date2) {
+    return isAfter(date1.dueDate, date2.dueDate) ? 1 : -1
+  }
+
+  const getAllLists = () => {
+    const listOfLists = todoLists
+    for (const list in listOfLists) {
+      listOfLists[list].sort(compare)
+    }
+    return listOfLists
+  }
+
 
   const getTodayList = () => {
     let todayList = []
-    const today = Date().split(' ').splice(0, 4).join(' ')
+    const today = new Date()
     for (const list in todoLists) {
       let numOfItems = todoLists[list].length
       for (let i = 0; i < numOfItems; i++) {
         const currItem = todoLists[list][i]
-        if (currItem.dueDate === today) {
+        if (differenceInCalendarDays(currItem.dueDate, today) === 0) {
           todayList.push(currItem)
         }
       }
@@ -32,42 +48,36 @@ export default function Lister() {
 
   const getWeekList = () => {
     let weekList = []
-    const dayName = Date().split(' ').splice(0, 1).join('')
-    const dayNumber = Date().split(' ').splice(2, 1).join('')
-    const month = Date().split(' ').splice(1, 1).join('')
-    const year = Date().split(' ').splice(3, 1).join('')
+    const today = new Date()
     for (const list in todoLists) {
       let numOfItems = todoLists[list].length
       for (let i = 0; i < numOfItems; i++) {
         const currItem = todoLists[list][i]
-        const currItemYear = currItem.dueDate.split(' ')[3]
-        const currItemMonth = currItem.dueDate.split(' ')[1]
-        const currItemDayNumber = currItem.dueDate.split(' ')[2]
-        const currItemDayName = currItem.dueDate.split(' ')[0]
+        if (differenceInCalendarWeeks(currItem.dueDate, today) === 0) {
+          weekList.push(currItem);
         }
-        weekList.push(currItem)
       }
-    const week = Date().split(' ').splice()
-
+    }
+    weekList.sort(compare)
     return weekList
   }
 
   const getMonthList = () => {
     let monthList = []
-    const month = Date().split(' ').splice(1, 1).join('')
+    const today = new Date()
     for (const list in todoLists) {
       let numOfItems = todoLists[list].length
       for (let i = 0; i < numOfItems; i++) {
         const currItem = todoLists[list][i]
-        if (currItem.dueDate.split(' ')[1] === month) {
+        if (differenceInCalendarMonths(currItem.dueDate, today) === 0) {
           monthList.push(currItem)
         }
       }
     }
-    function compare(day1, day2) {
-      return day1 === day2 ? 0 : day1 > day2 ? 1 : -1
+    function compare(date1, date2) {
+      return isAfter(date1.dueDate, date2.dueDate) ? 1 : -1
     }
-    monthList.sort((a, b) => compare(a.dueDate.split(' ')[2], b.dueDate.split(' ')[2]))
+    monthList.sort(compare)
     return monthList
   }
 
@@ -78,7 +88,7 @@ export default function Lister() {
       {
         "title": "My Title",
         "description": "My Description",
-        "dueDate": Date().split(' ').splice(0, 4).join(' '),
+        "dueDate": new Date(),
         "priority": 1,
         "complete": false
       }
@@ -98,7 +108,7 @@ export default function Lister() {
     const item = {
       "title": "My Title",
       "description": "My Description",
-      "dueDate": Date().split(' ').splice(0, 4).join(' '),
+      "dueDate": new Date(),
       "priority": 1,
       "complete": false
     }
@@ -134,7 +144,7 @@ export default function Lister() {
 
   const updateComplete = (item, newComplete) => {
     item.complete = newComplete
-  
+
     return 'Complete updated successfully'
   }
 

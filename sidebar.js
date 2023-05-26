@@ -1,7 +1,7 @@
-import singleList from './singleList.js'
-import todayPage from './today.js'
-import weekPage from './week.js'
-import monthPage from './month.js'
+import userListPage from './userList.js'
+import todayPage from './time-lists/today.js'
+import weekPage from './time-lists/week.js'
+import monthPage from './time-lists/month.js'
 import allTasks from './all-tasks.js'
 
 export default function sidebar(listOfLists) {
@@ -16,7 +16,7 @@ export default function sidebar(listOfLists) {
   const today = document.createElement('li');
   today.classList.add('list');
   today.textContent = 'Today';
-  today.addEventListener('click', e=> {
+  today.addEventListener('click', e => {
     document.querySelectorAll('.page').forEach(page => {
       if (page) {
         document.body.removeChild(page);
@@ -31,7 +31,7 @@ export default function sidebar(listOfLists) {
   const thisWeek = document.createElement('li');
   thisWeek.classList.add('list');
   thisWeek.textContent = 'This Week';
-  thisWeek.addEventListener('click', e=> {
+  thisWeek.addEventListener('click', e => {
     document.querySelectorAll('.page').forEach(page => {
       if (page) {
         document.body.removeChild(page);
@@ -46,7 +46,7 @@ export default function sidebar(listOfLists) {
   const thisMonth = document.createElement('li');
   thisMonth.classList.add('list');
   thisMonth.textContent = 'This Month';
-  thisMonth.addEventListener('click', e=> {
+  thisMonth.addEventListener('click', e => {
     document.querySelectorAll('.page').forEach(page => {
       if (page) {
         document.body.removeChild(page);
@@ -61,7 +61,7 @@ export default function sidebar(listOfLists) {
   const userListHeader = document.createElement('h2');
   userListHeader.classList.add('list-header');
   userListHeader.textContent = 'User Lists';
-  userListHeader.addEventListener('click', e=> {
+  userListHeader.addEventListener('click', e => {
     document.querySelectorAll('.page').forEach(page => {
       if (page) {
         document.body.removeChild(page);
@@ -77,8 +77,8 @@ export default function sidebar(listOfLists) {
   for (const list in listOfLists.getAllLists()) {
     const userList = document.createElement('li');
     userList.classList.add('list');
-    userList.textContent = list; 
-    userList.addEventListener('click', e=> {
+    userList.textContent = list;
+    userList.addEventListener('click', e => {
       console.log('clicked ', list)
       document.querySelectorAll('.page').forEach(page => {
         if (page) {
@@ -86,7 +86,7 @@ export default function sidebar(listOfLists) {
         }
       })
 
-      const listPage = singleList(listOfLists, list);
+      const listPage = userListPage(listOfLists, list);
       listPage.classList.add('list-page', 'page');
       listPage.style.display = 'block';
       document.body.appendChild(listPage);

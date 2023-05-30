@@ -44,11 +44,19 @@ export default function createTask(listOfLists, list, item) {
 
   task.style.backgroundColor = list[item].complete ? '#0f6e22' : '#7a0610';
   task.addEventListener('click', e => {
-    if (e.target.localName === 'p' || e.target.localName === 'select') {
+    if (e.target.localName === 'p' || e.target.localName === 'select' || e.target.localName === 'button') {
       return
     }
     listOfLists.updateComplete(list[item], !list[item].complete)
     task.style.backgroundColor = list[item].complete ? '#0f6e22' : '#7a0610'
+    if (task.querySelector('.past-due') && list[item].complete) {
+      task.removeChild(task.querySelector('.past-due'))
+    } else if (!task.querySelector('.past-due') && !list[item].complete && differenceInCalendarDays(list[item].dueDate, today) < 0) {
+      const pastDueMarker = document.createElement('p');
+      pastDueMarker.classList.add('marker', 'past-due');
+      pastDueMarker.textContent = 'Past Due';
+      task.appendChild(pastDueMarker);
+    }
   })
 
   const today = new Date();
@@ -58,12 +66,13 @@ export default function createTask(listOfLists, list, item) {
     todayMarker.classList.add('marker');
     todayMarker.textContent = 'Today';
     task.appendChild(todayMarker);
-  } else if (differenceInCalendarDays(list[item].dueDate, today) < 0) {
+  } else if (differenceInCalendarDays(list[item].dueDate, today) < 0 && !list[item].complete) {
     const pastDueMarker = document.createElement('p');
-    pastDueMarker.classList.add('marker');
+    pastDueMarker.classList.add('marker', 'past-due');
     pastDueMarker.textContent = 'Past Due';
     task.appendChild(pastDueMarker);
   }
+
 
   task.appendChild(title);
   task.appendChild(desc);

@@ -6,8 +6,17 @@
 
 body {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
+  padding-bottom: 20px;
 }
 
+header {
+  background: grey;
+  height: 100px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  margin-bottom: 10px;
+}
 
 .task {
   position: relative;
@@ -125,11 +134,19 @@ body {
   font-size: 3rem;
 }
 
-header {
-  background: grey;
-  height: 100px;
-  position: relative;
-  display: grid;
-  place-items: center;
-  margin-bottom: 10px;
+.add {
+  margin-left: 50vw;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  font-size: 3rem;
+}
+
+.delete {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  width: 25px;
+  height: 25px;
 }

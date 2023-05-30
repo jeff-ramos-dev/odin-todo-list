@@ -110,7 +110,7 @@ export default function Lister() {
       "description": "My Description",
       "dueDate": new Date(),
       "priority": 1,
-      "complete": false
+      "complete": false,
     }
 
     list.push(item)
@@ -169,9 +169,9 @@ export default function Lister() {
     return 'Item updated successfully'
   }
 
-  const deleteItem = (list, index) => {
+  const deleteItem = (listName, index) => {
 
-    todoLists[list].splice(index, 1)
+    todoLists[listName].splice(index, 1)
 
     return 'Item deleted successfully'
   }

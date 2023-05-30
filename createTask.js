@@ -1,7 +1,7 @@
 import format from "date-fns/format";
 import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
 
-export default function createTask(list, item) {
+export default function createTask(listOfLists, list, item) {
   const task = document.createElement('div');
   task.classList.add('task');
 

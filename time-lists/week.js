@@ -10,7 +10,7 @@ export default function weekPage(listOfLists) {
   container.appendChild(title);
 
   for (const item in weekList) {
-    const weekTask = createTask(weekList, item);
+    const weekTask = createTask(listOfLists, weekList, item);
     container.appendChild(weekTask);
   }
 

@@ -10,7 +10,7 @@ export default function monthPage(listOfLists) {
   container.appendChild(title);
 
   for (const item in monthList) {
-    const monthTask = createTask(monthList, item);
+    const monthTask = createTask(listOfLists, monthList, item);
     container.appendChild(monthTask);
   }
 

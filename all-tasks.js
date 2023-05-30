@@ -17,7 +17,7 @@ export default function allTasks(listOfLists) {
     listWrapper.appendChild(listName)
 
     for (const item in currList) {
-      const task = createTask(currList, item)
+      const task = createTask(listOfLists, currList, item)
       listWrapper.appendChild(task);
       allTaskContainer.appendChild(listWrapper);
     }

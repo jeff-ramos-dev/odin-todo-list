@@ -10,7 +10,7 @@ export default function todayPage(listOfLists) {
   container.appendChild(title);
 
   for (const item in todayList) {
-    const todayTask = createTask(todayList, item);
+    const todayTask = createTask(listOfLists, todayList, item);
     container.appendChild(todayTask);
   }
 

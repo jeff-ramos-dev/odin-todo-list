@@ -73,11 +73,20 @@ export default function createTask(listOfLists, list, item) {
     task.appendChild(pastDueMarker);
   }
 
+  const deleteButton = document.createElement('button');
+  deleteButton.textContent = 'X';
+  deleteButton.classList.add('delete');
+  deleteButton.addEventListener('click', e => {
+    console.log(list, item)
+    console.log(list.length)
+    listOfLists.deleteItem(list[item].parentList, item);
+    task.parentElement.removeChild(task);
+  });
 
   task.appendChild(title);
   task.appendChild(desc);
   task.appendChild(dueDate);
   task.appendChild(priority);
-
+  task.appendChild(deleteButton);
   return task
 }

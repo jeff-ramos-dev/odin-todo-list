@@ -20,8 +20,8 @@ function createExample() {
   for (let i = 0; i < 4; i++) {
     if (i > 0) {
       list.createNewList();
-      let currList = list.getAllLists()[`My List ${i + 1}`];
-      list.deleteItem(`My List ${i + 1}`, 0);
+      let currList = `My List ${i + 1}`;
+      list.deleteItem(currList, 0);
       for (let j = 0; j < 5; j++) {
         list.addItem(currList);
         list.updateItem(
@@ -37,7 +37,7 @@ function createExample() {
     };
   };
   list.updateItem(
-    list.getAllLists()["My List 2"],
+    "My List 2",
     3,
     "Different Title",
     "Different Description",
@@ -46,7 +46,7 @@ function createExample() {
     true
   );
   list.updateItem(
-    list.getAllLists()["My List 3"],
+    "My List 3",
     3,
     "Different Title",
     "Different Description",

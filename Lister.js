@@ -12,7 +12,8 @@ export default function Lister() {
         "description": "My Description",
         "dueDate": new Date(),
         "priority": 1,
-        "complete": false
+        "complete": false,
+        "parentList": "My List"
       },
     ]
   }
@@ -84,26 +85,27 @@ export default function Lister() {
   const createNewList = (title = 'My List') => {
     const count = Object.keys(todoLists).length
 
+    if (title === 'My List' && count > 0) {
+      title += ` ${count + 1}`
+    }
+
     const list = [
       {
         "title": "My Title",
         "description": "My Description",
         "dueDate": new Date(),
         "priority": 1,
-        "complete": false
+        "complete": false,
+        "parentList": title
       }
     ]
-
-    if (title === 'My List' && count > 0) {
-      title += ` ${count + 1}`
-    }
 
     todoLists[title] = list
 
     return "List created successfully"
   }
 
-  const addItem = (list) => {
+  const addItem = (listName) => {
 
     const item = {
       "title": "My Title",
@@ -111,9 +113,10 @@ export default function Lister() {
       "dueDate": new Date(),
       "priority": 1,
       "complete": false,
+      "parentList": listName
     }
 
-    list.push(item)
+    todoLists[listName].push(item)
 
     return "Item added successfully"
   }
@@ -150,20 +153,21 @@ export default function Lister() {
 
 
   const updateItem = (
-    list,
+    listName,
     index,
-    title = list[index].title,
-    description = list[index].description,
-    dueDate = list[index].dueDate,
-    priority = list[index].priority,
-    complete = list[index].complete
+    title = todoLists[listName][index].title,
+    description = todoLists[listName][index].description,
+    dueDate = todoLists[listName][index].dueDate,
+    priority = todoLists[listName][index].priority,
+    complete = todoLists[listName][index].complete
   ) => {
-    list[index] = {
+    todoLists[listName][index] = {
       "title": title,
       "description": description,
       "dueDate": dueDate,
       "priority": priority,
-      "complete": complete
+      "complete": complete,
+      "parentList": listName
     }
 
     return 'Item updated successfully'

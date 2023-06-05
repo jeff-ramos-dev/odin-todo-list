@@ -18,7 +18,7 @@ header {
   margin-bottom: 10px;
 }
 
-.task {
+.todo {
   position: relative;
   margin: 20px;
   color: white;
@@ -30,7 +30,7 @@ header {
   width: fit-content;
 }
 
-.list-name {
+.list-title {
   text-align: center;
 }
 
@@ -135,7 +135,7 @@ header {
 }
 
 .add {
-  margin-left: 50vw;
+  margin: 10px 0 10px 50vw;
   transform: translateX(-50%);
   width: 60px;
   height: 60px;

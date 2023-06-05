@@ -2,7 +2,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const path = require('path');
 
 module.exports = {
-  mode: 'production',
+  mode: 'development',
   entry: './src/index.js',
   devServer: {
     static: './dist',
@@ -10,6 +10,8 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       title: 'To-Do-List',
+      myPageHeader: 'Lister',
+      template: './src/index.html',
     }),
   ],
   output: {

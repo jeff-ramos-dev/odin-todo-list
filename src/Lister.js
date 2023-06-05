@@ -2,12 +2,14 @@ import differenceInCalendarDays from 'date-fns/differenceInCalendarDays'
 import differenceInCalendarWeeks from 'date-fns/differenceInCalendarWeeks'
 import differenceInCalendarMonths from 'date-fns/differenceInCalendarMonths'
 import isAfter from 'date-fns/isAfter'
+import { v4 as uuidv4 } from 'uuid'
 
 export default function Lister() {
 
   const todoLists = {
     "My List": [
       {
+        "id": 1234,
         "title": "My Title",
         "description": "My Description",
         "dueDate": new Date(),
@@ -23,11 +25,10 @@ export default function Lister() {
   }
 
   const getAllLists = () => {
-    const listOfLists = todoLists
-    for (const list in listOfLists) {
-      listOfLists[list].sort(compare)
-    }
-    return listOfLists
+    // for (const list in todoLists) {
+    //   todoLists[list].sort(compare)
+    // }
+    return todoLists
   }
 
 
@@ -85,12 +86,15 @@ export default function Lister() {
   const createNewList = (title = 'My List') => {
     const count = Object.keys(todoLists).length
 
+    const uniqueId = uuidv4()
+
     if (title === 'My List' && count > 0) {
       title += ` ${count + 1}`
     }
 
     const list = [
       {
+        "id": uniqueId,
         "title": "My Title",
         "description": "My Description",
         "dueDate": new Date(),
@@ -106,8 +110,9 @@ export default function Lister() {
   }
 
   const addItem = (listName) => {
-
+    const uniqueId = uuidv4()
     const item = {
+      "id": uniqueId,
       "title": "My Title",
       "description": "My Description",
       "dueDate": new Date(),
@@ -162,6 +167,7 @@ export default function Lister() {
     complete = todoLists[listName][index].complete
   ) => {
     todoLists[listName][index] = {
+      "id": todoLists[listName][index].id,
       "title": title,
       "description": description,
       "dueDate": dueDate,
@@ -173,9 +179,12 @@ export default function Lister() {
     return 'Item updated successfully'
   }
 
-  const deleteItem = (listName, index) => {
-
-    todoLists[listName].splice(index, 1)
+  const deleteItem = (listName, id) => {
+    for (const item in todoLists[listName]) {
+      if (todoLists[listName][item].id === id) {
+        todoLists[listName].splice(item, 1)
+      }
+    }
 
     return 'Item deleted successfully'
   }

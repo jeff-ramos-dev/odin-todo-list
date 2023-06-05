@@ -79,6 +79,8 @@ export default function buildSidebar(listOfLists) {
 
   closeBtn.addEventListener('click', e => {
     sidebar.classList.toggle('show-sidebar');
+    document.body.style.marginLeft = '0';
+    document.querySelector('.menu-btn').style.marginLeft = '0';
   });
 
   document.addEventListener('click', e => {
@@ -86,6 +88,8 @@ export default function buildSidebar(listOfLists) {
       !e.target.classList.contains('menu-btn') &&
       sidebar.classList.contains('show-sidebar')) {
       sidebar.classList.toggle('show-sidebar');
+      document.querySelector('.menu-btn').style.marginLeft = '0';
+      document.body.style.marginLeft = '0';
     }
   })
 

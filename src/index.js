@@ -72,5 +72,13 @@ const menuBtn = document.querySelector('.menu-btn');
 menuBtn.src = menuIcon
 
 menuBtn.addEventListener('click', e => {
+  if (menu.classList.contains('show-sidebar')) {
+    document.body.style.marginLeft = '0';
+    menuBtn.style.marginLeft = '0';
+  } else {
+    document.body.style.marginLeft = '200px';
+    menuBtn.style.marginLeft = '200px';
+  }
   menu.classList.toggle('show-sidebar');
+
 });

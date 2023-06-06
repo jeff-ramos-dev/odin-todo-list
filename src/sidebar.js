@@ -52,8 +52,8 @@ export default function buildSidebar(listOfLists) {
     })
 
     const allListsPage = buildAllListsPage(listOfLists);
-    allListsPage.classList.add('allTasks-page', 'page');
-    allListsPage.style.display = 'block';
+    allListsPage.classList.add('allLists-page', 'page');
+    allListsPage.style.display = 'flex';
     document.body.appendChild(allListsPage);
   })
 

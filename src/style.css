@@ -136,9 +136,19 @@ header {
   font-size: 3rem;
 }
 
+.page {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.container {
+  width: 100%;
+}
+
 .add {
-  margin: 10px 0 10px 50vw;
-  transform: translateX(-50%);
+  margin: 10px 0 10px 0;
   width: 60px;
   height: 60px;
   font-size: 3rem;

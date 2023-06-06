@@ -224,6 +224,7 @@ export function buildAllListsPage(listOfLists) {
 
   for (const listName in allLists) {
     const listWrapper = document.createElement('div');
+    listWrapper.classList.add('container')
     const listTitle = document.createElement('h1')
     listTitle.classList.add('list-title');
     listTitle.textContent = listName;

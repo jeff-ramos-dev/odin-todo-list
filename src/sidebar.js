@@ -24,8 +24,6 @@ export default function buildSidebar(listOfLists) {
     })
 
     const weekPage = buildWeekPage(listOfLists);
-    weekPage.classList.add('week-page', 'page');
-    weekPage.style.display = 'flex';
     document.body.appendChild(weekPage);
   })
   const thisMonth = document.querySelector('.month-list');
@@ -37,8 +35,6 @@ export default function buildSidebar(listOfLists) {
     })
 
     const monthPage = buildMonthPage(listOfLists);
-    monthPage.classList.add('month-page', 'page');
-    monthPage.style.display = 'flex';
     document.body.appendChild(monthPage);
   })
   const userListHeader = document.querySelector('.list-header');
@@ -50,8 +46,6 @@ export default function buildSidebar(listOfLists) {
     })
 
     const allListsPage = buildAllListsPage(listOfLists);
-    allListsPage.classList.add('allLists-page', 'page');
-    allListsPage.style.display = 'flex';
     document.body.appendChild(allListsPage);
   })
 
@@ -68,8 +62,6 @@ export default function buildSidebar(listOfLists) {
         }
       })
       const userListPage = buildUserListPage(listOfLists, list);
-      userListPage.classList.add('list-page', 'page');
-      userListPage.style.display = 'flex';
       document.body.appendChild(userListPage);
     })
     userLists.appendChild(userList);

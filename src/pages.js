@@ -247,6 +247,8 @@ export function buildAllListsPage(listOfLists) {
       listOfLists.addItem(listName);
       const newTask = createTodo(listOfLists, listName, allLists[listName].length - 1);
       listWrapper.appendChild(newTask);
+      listWrapper.removeChild(addButton);
+      listWrapper.appendChild(addButton);
     })
     listWrapper.appendChild(addButton);
   };
@@ -282,8 +284,10 @@ export function buildUserListPage(listOfLists, listName) {
     listOfLists.addItem(listName);
     const newTask = createTodo(listOfLists, listName, listOfLists.getAllLists()[listName].length - 1);
     listWrapper.appendChild(newTask);
+    listWrapper.removeChild(addButton);
+    listWrapper.appendChild(addButton);
   })
-  userList.appendChild(addButton);
+  listWrapper.appendChild(addButton);
   return userList
 }
 

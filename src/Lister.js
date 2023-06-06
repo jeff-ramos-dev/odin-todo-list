@@ -13,7 +13,7 @@ export default function Lister() {
         "title": "My Title",
         "description": "My Description",
         "dueDate": new Date(),
-        "priority": 1,
+        "urgent": false,
         "complete": false,
         "parentList": "My List"
       },
@@ -98,7 +98,7 @@ export default function Lister() {
         "title": "My Title",
         "description": "My Description",
         "dueDate": new Date(),
-        "priority": 1,
+        "priority": false,
         "complete": false,
         "parentList": title
       }
@@ -116,7 +116,7 @@ export default function Lister() {
       "title": "My Title",
       "description": "My Description",
       "dueDate": new Date(),
-      "priority": 1,
+      "priority": false,
       "complete": false,
       "parentList": listName
     }
@@ -145,7 +145,7 @@ export default function Lister() {
   }
 
   const updatePriority = (item, newPriority) => {
-    item.priority = newPriority
+    item.urgent = newPriority
 
     return 'Priority updated successfully'
   }
@@ -163,7 +163,7 @@ export default function Lister() {
     title = todoLists[listName][index].title,
     description = todoLists[listName][index].description,
     dueDate = todoLists[listName][index].dueDate,
-    priority = todoLists[listName][index].priority,
+    priority = todoLists[listName][index].urgent,
     complete = todoLists[listName][index].complete
   ) => {
     todoLists[listName][index] = {
@@ -171,7 +171,7 @@ export default function Lister() {
       "title": title,
       "description": description,
       "dueDate": dueDate,
-      "priority": priority,
+      "urgent": priority,
       "complete": complete,
       "parentList": listName
     }

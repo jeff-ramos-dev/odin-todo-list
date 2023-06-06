@@ -27,6 +27,22 @@ header {
   color: white;
   padding: 10px;
   width: 100%;
+  border-radius: 6px;
+}
+
+.priority {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.priority > input {
+  margin-top: 1px;
+}
+
+.urgent {
+  border-left: 8px solid orangered
 }
 
 .prop {
@@ -66,6 +82,7 @@ header {
 
 .close {
   position: absolute;
+  color: black;
   top: 10px;
   right: 10px;
   width: 30px;
@@ -153,7 +170,7 @@ header {
 }
 
 .container {
-  background: red;
+  background: rgb(55, 55, 55);
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -162,8 +179,12 @@ header {
   padding: 0 20px;
 }
 
+.urgent {
+  border-left: 8px solid #c03c10;
+}
+
 .add {
-  margin: 10px 0 10px 0;
+  margin: 10px 0 30px 0;
   width: 60px;
   height: 60px;
   font-size: 3rem;

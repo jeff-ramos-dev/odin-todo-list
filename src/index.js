@@ -1,53 +1,8 @@
 import { buildAllListsPage, buildTodayPage, buildMonthPage, buildWeekPage } from './pages.js'
 import buildSidebar from './sidebar.js'
-import Lister from './Lister.js'
+import createExample from './example.js'
 import './style.css'
 import menuIcon from '../images/menu-icon.png'
-
-function createExample() {
-  const list = Lister();
-
-  for (let i = 0; i < 4; i++) {
-    if (i > 0) {
-      list.createNewList();
-      let currListName = `My List ${i + 1}`;
-      list.deleteItem(currListName, 0);
-      for (let j = 0; j < 5; j++) {
-        list.addItem(currListName);
-        list.updateItem(
-          currListName,
-          j,
-          `My Title ${j + 1}`,
-          `My Description ${j + 1}`,
-          new Date(2023, 4, j + 26),
-          j + 1,
-          false,
-        );
-      };
-    };
-  };
-
-  list.updateItem(
-    "My List 2",
-    3,
-    "Different Title",
-    "Different Description",
-    new Date(2023, 5, 6),
-    3,
-    true
-  );
-  list.updateItem(
-    "My List 3",
-    3,
-    "Different Title",
-    "Different Description",
-    new Date(2023, 4, 6),
-    2,
-    true
-  );
-
-  return list;
-};
 
 const exampleListOfLists = createExample();
 

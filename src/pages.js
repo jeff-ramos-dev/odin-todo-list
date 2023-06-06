@@ -18,36 +18,33 @@ export function createTodo(listOfLists, listName, index) {
   dueDate.classList.add('date', 'prop');
   dueDate.textContent = format(list[index].dueDate, 'eee MMM d yyy');
 
-  const priority = document.createElement('select');
+  const priority = document.createElement('div');
   priority.classList.add('priority', 'prop');
+  const urgentPrompt = document.createElement('p');
+  urgentPrompt.textContent = 'Urgent?'
+  priority.appendChild(urgentPrompt);
 
-  const option1 = document.createElement('option')
-  option1.value = option1.text = 1
-  const option2 = document.createElement('option')
-  option2.value = option2.text = 2
-  const option3 = document.createElement('option')
-  option3.value = option3.text = 3
-  const option4 = document.createElement('option')
-  option4.value = option4.text = 4
-  const option5 = document.createElement('option')
-  option5.value = option5.text = 5
+  const urgent = document.createElement('input');
+  urgent.type = 'checkbox';
+  urgent.classList.add('urgent');
+  priority.appendChild(urgent);
 
-  priority.appendChild(option1)
-  priority.appendChild(option2)
-  priority.appendChild(option3)
-  priority.appendChild(option4)
-  priority.appendChild(option5)
-  priority.selectedIndex = list[index].priority - 1
-  priority.classList.add('priority', 'prop');
-  priority.addEventListener('change', e => {
-    listOfLists.updatePriority(list[index], e.target.value)
+  urgent.addEventListener('input', e => {
+    listOfLists.updatePriority(list[index], e.target.checked)
+    todo.classList.toggle('urgent');
   })
 
   todo.style.backgroundColor = list[index].complete ? '#0f6e22' : '#7a0610';
 
+  if (list[index].urgent) {
+    todo.classList.add('urgent');
+    urgent.checked = true;
+  }
+
+
   todo.addEventListener('click', e => {
     if (e.target.localName === 'p' ||
-      e.target.localName === 'select' ||
+      e.target.localName === 'input' ||
       e.target.localName === 'button') {
       return
     }
@@ -125,36 +122,32 @@ export function createTimedTodo(listOfLists, list, index) {
   dueDate.classList.add('date', 'prop');
   dueDate.textContent = format(list[index].dueDate, 'eee MMM d yyy');
 
-  const priority = document.createElement('select');
+  const priority = document.createElement('div');
   priority.classList.add('priority', 'prop');
+  const urgentPrompt = document.createElement('p');
+  urgentPrompt.textContent = 'Urgent?'
+  priority.appendChild(urgentPrompt);
 
-  const option1 = document.createElement('option')
-  option1.value = option1.text = 1
-  const option2 = document.createElement('option')
-  option2.value = option2.text = 2
-  const option3 = document.createElement('option')
-  option3.value = option3.text = 3
-  const option4 = document.createElement('option')
-  option4.value = option4.text = 4
-  const option5 = document.createElement('option')
-  option5.value = option5.text = 5
+  const urgent = document.createElement('input');
+  urgent.type = 'checkbox';
+  urgent.classList.add('urgent');
+  priority.appendChild(urgent);
 
-  priority.appendChild(option1)
-  priority.appendChild(option2)
-  priority.appendChild(option3)
-  priority.appendChild(option4)
-  priority.appendChild(option5)
-  priority.selectedIndex = list[index].priority - 1
-  priority.classList.add('priority', 'prop');
-  priority.addEventListener('change', e => {
-    listOfLists.updatePriority(list[index], e.target.value)
+  urgent.addEventListener('input', e => {
+    listOfLists.updatePriority(list[index], e.target.checked)
+    todo.classList.toggle('urgent');
   })
 
   todo.style.backgroundColor = list[index].complete ? '#0f6e22' : '#7a0610';
 
+  if (list[index].urgent) {
+    todo.classList.add('urgent');
+    urgent.checked = true;
+  }
+
   todo.addEventListener('click', e => {
     if (e.target.localName === 'p' ||
-      e.target.localName === 'select' ||
+      e.target.localName === 'input' ||
       e.target.localName === 'button') {
       return
     }

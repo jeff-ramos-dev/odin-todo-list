@@ -13,8 +13,6 @@ export default function buildSidebar(listOfLists) {
     })
 
     const todayPage = buildTodayPage(listOfLists);
-    todayPage.classList.add('today-page', 'page');
-    todayPage.style.display = 'block';
     document.body.appendChild(todayPage);
   })
   const thisWeek = document.querySelector('.week-list');
@@ -27,7 +25,7 @@ export default function buildSidebar(listOfLists) {
 
     const weekPage = buildWeekPage(listOfLists);
     weekPage.classList.add('week-page', 'page');
-    weekPage.style.display = 'block';
+    weekPage.style.display = 'flex';
     document.body.appendChild(weekPage);
   })
   const thisMonth = document.querySelector('.month-list');
@@ -40,7 +38,7 @@ export default function buildSidebar(listOfLists) {
 
     const monthPage = buildMonthPage(listOfLists);
     monthPage.classList.add('month-page', 'page');
-    monthPage.style.display = 'block';
+    monthPage.style.display = 'flex';
     document.body.appendChild(monthPage);
   })
   const userListHeader = document.querySelector('.list-header');
@@ -71,7 +69,7 @@ export default function buildSidebar(listOfLists) {
       })
       const userListPage = buildUserListPage(listOfLists, list);
       userListPage.classList.add('list-page', 'page');
-      userListPage.style.display = 'block';
+      userListPage.style.display = 'flex';
       document.body.appendChild(userListPage);
     })
     userLists.appendChild(userList);
@@ -81,6 +79,7 @@ export default function buildSidebar(listOfLists) {
     sidebar.classList.toggle('show-sidebar');
     document.body.style.marginLeft = '0';
     document.querySelector('.menu-btn').style.marginLeft = '0';
+    document.querySelector('.header-title').style.transform = 'translateX(0)';
   });
 
   document.addEventListener('click', e => {
@@ -90,6 +89,7 @@ export default function buildSidebar(listOfLists) {
       sidebar.classList.toggle('show-sidebar');
       document.querySelector('.menu-btn').style.marginLeft = '0';
       document.body.style.marginLeft = '0';
+      document.querySelector('.header-title').style.transform = 'translateX(0)';
     }
   })
 

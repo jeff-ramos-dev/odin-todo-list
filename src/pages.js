@@ -248,7 +248,7 @@ export function buildAllListsPage(listOfLists) {
       const newTask = createTodo(listOfLists, listName, allLists[listName].length - 1);
       listWrapper.appendChild(newTask);
     })
-    allUserTodos.appendChild(addButton);
+    listWrapper.appendChild(addButton);
   };
 
   return allUserTodos;
@@ -264,6 +264,7 @@ export function buildUserListPage(listOfLists, listName) {
   userList.appendChild(title);
 
   const listWrapper = document.createElement('div');
+  listWrapper.classList.add('container');
 
   const currList = listOfLists.getAllLists()[listName]
 
@@ -294,12 +295,16 @@ export function buildTodayPage(listOfLists) {
   title.style.textAlign = 'center'
 
   const todayTodos = document.createElement('div');
-  todayTodos.appendChild(title);
   todayTodos.classList.add('page', 'today-page')
+  todayTodos.style.paddingTop = '120px';
+  todayTodos.appendChild(title);
+  const listWrapper = document.createElement('div');
+  listWrapper.classList.add('container');
+  todayTodos.appendChild(listWrapper);
 
   for (const index in todayList) {
     const todayTodo = createTimedTodo(listOfLists, todayList, index);
-    todayTodos.appendChild(todayTodo);
+    listWrapper.appendChild(todayTodo);
   }
 
   return todayTodos
@@ -313,12 +318,16 @@ export function buildWeekPage(listOfLists) {
   title.style.textAlign = 'center'
 
   const weekTodos = document.createElement('div');
-  weekTodos.appendChild(title);
   weekTodos.classList.add('page', 'week-page');
+  weekTodos.appendChild(title);
+
+  const listWrapper = document.createElement('div');
+  listWrapper.classList.add('container');
+  weekTodos.appendChild(listWrapper);
 
   for (const index in weekList) {
     const weekTodo = createTimedTodo(listOfLists, weekList, index);
-    weekTodos.appendChild(weekTodo);
+    listWrapper.appendChild(weekTodo);
   }
 
   return weekTodos
@@ -332,12 +341,16 @@ export function buildMonthPage(listOfLists) {
   title.style.textAlign = 'center'
 
   const monthTodos = document.createElement('div');
-  monthTodos.appendChild(title);
   monthTodos.classList.add('page', 'month-page');
+  monthTodos.appendChild(title);
+
+  const listWrapper = document.createElement('div');
+  listWrapper.classList.add('container');
+  monthTodos.appendChild(listWrapper);
 
   for (const index in monthList) {
     const monthTodo = createTimedTodo(listOfLists, monthList, index);
-    monthTodos.appendChild(monthTodo);
+    listWrapper.appendChild(monthTodo);
   }
 
   return monthTodos

@@ -75,9 +75,11 @@ menuBtn.addEventListener('click', e => {
   if (menu.classList.contains('show-sidebar')) {
     document.body.style.marginLeft = '0';
     menuBtn.style.marginLeft = '0';
+    document.querySelector('.header-title').style.transform = '';
   } else {
     document.body.style.marginLeft = '200px';
     menuBtn.style.marginLeft = '200px';
+    document.querySelector('.header-title').style.transform = 'translateX(-50%)';
   }
   menu.classList.toggle('show-sidebar');
 

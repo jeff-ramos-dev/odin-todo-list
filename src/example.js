@@ -26,7 +26,7 @@ export default function createExample() {
   list.updateItem(
     "My List 2",
     3,
-    "Different Title",
+    "This is a longer title, maybe someone would write a todo this long?",
     "Different Description",
     new Date(2023, 6, 6),
     true,

@@ -28,6 +28,9 @@ header {
   padding: 10px;
   width: 100%;
   border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .priority {
@@ -46,8 +49,7 @@ header {
 }
 
 .prop {
-  margin-top: 10px;
-  width: fit-content;
+  margin: 10px;
 }
 
 .list-title {
@@ -148,7 +150,7 @@ header {
 
 .marker {
   position: absolute;
-  top: 10px;
+  top: -20px;
   right: 10px;
 }
 
@@ -187,16 +189,120 @@ header {
   margin: 10px 0 30px 0;
   width: 60px;
   height: 60px;
-  font-size: 3rem;
-  color: black;
+  border-radius: 50%;
+  filter: saturate(10) hue-rotate(270deg) contrast(1) brightness(1.5);
+  cursor: pointer;
 }
 
-.delete {
-  position: absolute;
+.add:hover {
+  filter: saturate(10) hue-rotate(270deg) contrast(1.5) brightness(1.2);
+}
+
+.date-picker {
+  border-radius: 5px;
+  padding: 0 2px;
+  border: 2px solid black;
+}
+
+.icon {
+  height: 30px;
+  width: 30px;
+  margin: 0 10px;
+  cursor: pointer;
+}
+
+.delete, .priority {
+  background: white;
+  border-radius: 50%;
+}
+
+.delete:hover {
+  filter: hue-rotate(20deg) saturate(5) contrast(1);
+}
+
+.note {
+  filter: invert(1);
+}
+
+.note:hover {
+  filter: invert(0.75) saturate(3) hue-rotate(90deg);
+}
+
+.modal {
+  position: fixed;
   top: 50%;
-  right: 10px;
-  transform: translateY(-50%);
-  width: 25px;
-  height: 25px;
-  color: black;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 400px;
+  width: 400px;
+  background: grey;
+}
+
+.inner-modal {
+  position: relative;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  padding-top: 20px;
+  grid-template-columns: 1fr 1fr;
+  place-items: center;
+}
+
+.todoNote {
+  height: 275px;
+  width: 275px;
+  padding: 4px;
+  border: 2px solid white;
+  border-radius: 5px;
+  background: lightgrey;
+  grid-column-start: span 2;
+}
+
+.okay, .cancel {
+  width: 80px;
+  height: 40px;
+  color: white;
+  border-radius: 5px;
+}
+
+.okay {
+  background: darkgreen;
+}
+
+.cancel {
+  background: darkred;
+}
+
+.priority {
+  filter: saturate(0);
+}
+
+.priority:hover {
+  filter: none;
+}
+
+.colored {
+  filter: none;
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media (max-width: 400px) {
+  .todo {
+    flex-direction: column;
+  }
+  
+  .title {
+    text-align: center;
+  }
+}
+
+@media (min-width: 600px) {
+  .title {
+    width: 50%;
+    text-align: left;
+  }
 }

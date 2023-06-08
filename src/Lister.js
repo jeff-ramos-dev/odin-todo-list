@@ -98,7 +98,7 @@ export default function Lister() {
         "title": "My Title",
         "description": "My Description",
         "dueDate": new Date(),
-        "priority": false,
+        "urgent": false,
         "complete": false,
         "parentList": title
       }
@@ -116,7 +116,7 @@ export default function Lister() {
       "title": "My Title",
       "description": "My Description",
       "dueDate": new Date(),
-      "priority": false,
+      "urgent": false,
       "complete": false,
       "parentList": listName
     }

@@ -37,5 +37,15 @@ menuBtn.addEventListener('click', e => {
     document.querySelector('.header-title').style.transform = 'translateX(-50%)';
   }
   menu.classList.toggle('show-sidebar');
-
 });
+
+document.addEventListener('mousedown', e => {
+  const modal = document.querySelector('.modal')
+  if (modal && !e.target.classList.contains('note')) {
+    if (e.target !== modal &&
+      e.target !== document.querySelector('.inner-modal') &&
+      e.target !== document.querySelector('.todoNote')) {
+      document.body.removeChild(modal)
+    }
+  }
+})

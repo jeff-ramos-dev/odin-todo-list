@@ -6,122 +6,123 @@ import openModal from './openModal'
 import format from "date-fns/format";
 import { buildAllListsPage, buildUserListPage, buildTodayPage, buildWeekPage, buildMonthPage } from "./pages";
 
-export default function createTodo(listOfLists, task) {
-  const todo = document.createElement('div');
-  todo.classList.add('todo');
+export default function createTodo(listOfLists, todo) {
+  const todoContainer = document.createElement('div');
+  todoContainer.classList.add('todo');
 
   const title = document.createElement('p');
   title.classList.add('title', 'prop');
-  title.textContent = task.title
+  title.textContent = todo.title
 
   const addNoteButton = new Image();
   addNoteButton.src = notepadIcon
   addNoteButton.classList.add('icon', 'note');
   addNoteButton.addEventListener('click', e => {
-    openModal(listOfLists, task);
+    openModal(listOfLists, todo);
   })
 
-  const dates = document.createElement('div');
+  const datesContainer = document.createElement('div');
 
   const dueDate = document.createElement('p');
   dueDate.classList.add('date', 'prop');
-  dueDate.textContent = format(task.dueDate, 'eee MMM d yyy');
-  dates.appendChild(dueDate);
+  dueDate.textContent = format(todo.dueDate, 'eee MMM d yyy');
   dueDate.addEventListener('click', e => {
     dueDate.style.display = 'none';
     datePicker.style.display = 'block';
-    datePicker.value = format(task.dueDate, `yyy-LL-dd`)
+    datePicker.value = format(todo.dueDate, `yyy-LL-dd`)
   })
 
   const datePicker = document.createElement('input');
   datePicker.classList.add('date-picker');
   datePicker.type = 'date';
-  dates.appendChild(datePicker);
   datePicker.style.display = 'none';
   datePicker.addEventListener('change', e => {
     const year = e.target.value.split('-')[0]
     const month = (parseInt(e.target.value.split('-')[1]) - 1).toString()
     const day = e.target.value.split('-')[2]
     console.log(`${year}-${month}-${day}`);
-    listOfLists.updateDueDate(task, new Date(year, month, day));
-    dueDate.textContent = format(task.dueDate, 'eee MMM d yyy');
+    listOfLists.updateDueDate(todo, new Date(year, month, day));
+    dueDate.textContent = format(todo.dueDate, 'eee MMM d yyy');
     datePicker.style.display = 'none';
     dueDate.style.display = 'block';
-    if (todo.querySelector('.marker')) {
-      todo.removeChild(todo.querySelector('.marker'));
+    if (todoContainer.querySelector('.marker')) {
+      todoContainer.removeChild(todoContainer.querySelector('.marker'));
     }
-    if (differenceInCalendarDays(task.dueDate, today) === 0) {
+    if (differenceInCalendarDays(todo.dueDate, today) === 0) {
       const todayMarker = document.createElement('p');
       todayMarker.classList.add('marker');
       todayMarker.textContent = 'Today';
-      todo.appendChild(todayMarker);
+      todoContainer.appendChild(todayMarker);
     } else if (
-      differenceInCalendarDays(task.dueDate, today) < 0 &&
-      !task.complete
+      differenceInCalendarDays(todo.dueDate, today) < 0 &&
+      !todo.complete
     ) {
       const pastDueMarker = document.createElement('p');
       pastDueMarker.classList.add('marker', 'past-due');
       pastDueMarker.textContent = 'Past Due';
-      todo.appendChild(pastDueMarker);
+      todoContainer.appendChild(pastDueMarker);
     }
   })
+
+  datesContainer.appendChild(dueDate);
+  datesContainer.appendChild(datePicker);
 
   const urgent = new Image()
   urgent.src = exclamationIcon
   urgent.classList.add('icon', 'priority');
 
   urgent.addEventListener('click', e => {
-    listOfLists.updatePriority(task, !task.urgent)
-    todo.classList.toggle('urgent');
+    listOfLists.updateUrgency(todo, !todo.urgent)
+    todoContainer.classList.toggle('urgent');
     urgent.classList.toggle('colored');
   })
 
-  todo.style.backgroundColor = task.complete ? '#0f6e22' : '#7a0610';
+  todoContainer.style.backgroundColor = todo.complete ? '#0f6e22' : '#7a0610';
 
-  if (task.urgent) {
-    todo.classList.add('urgent');
+  if (todo.urgent) {
+    todoContainer.classList.add('urgent');
     urgent.classList.add('colored');
   }
 
-  todo.addEventListener('click', e => {
+  todoContainer.addEventListener('click', e => {
     if (e.target.localName === 'p' && !e.target.classList.contains('title') ||
       e.target.localName === 'input' ||
       e.target.localName === 'img') {
       return
     }
 
-    listOfLists.updateComplete(task, !task.complete)
-    todo.style.backgroundColor = task.complete ? '#0f6e22' : '#7a0610'
+    listOfLists.updateCompletion(todo, !todo.complete)
+    todoContainer.style.backgroundColor = todo.complete ? '#0f6e22' : '#7a0610'
 
-    if (todo.querySelector('.past-due') && task.complete) {
-      todo.removeChild(todo.querySelector('.past-due'))
+    if (todoContainer.querySelector('.past-due') && todo.complete) {
+      todoContainer.removeChild(todoContainer.querySelector('.past-due'))
     } else if (
-      !todo.querySelector('.past-due') &&
-      !task.complete &&
-      differenceInCalendarDays(task.dueDate, today) < 0
+      !todoContainer.querySelector('.past-due') &&
+      !todo.complete &&
+      differenceInCalendarDays(todo.dueDate, today) < 0
     ) {
       const pastDueMarker = document.createElement('p');
       pastDueMarker.classList.add('marker', 'past-due');
       pastDueMarker.textContent = 'Past Due';
-      todo.appendChild(pastDueMarker);
+      todoContainer.appendChild(pastDueMarker);
     }
   })
 
   const today = new Date();
 
-  if (differenceInCalendarDays(task.dueDate, today) === 0) {
+  if (differenceInCalendarDays(todo.dueDate, today) === 0) {
     const todayMarker = document.createElement('p');
     todayMarker.classList.add('marker');
     todayMarker.textContent = 'Today';
-    todo.appendChild(todayMarker);
+    todoContainer.appendChild(todayMarker);
   } else if (
-    differenceInCalendarDays(task.dueDate, today) < 0 &&
-    !task.complete
+    differenceInCalendarDays(todo.dueDate, today) < 0 &&
+    !todo.complete
   ) {
     const pastDueMarker = document.createElement('p');
     pastDueMarker.classList.add('marker', 'past-due');
     pastDueMarker.textContent = 'Past Due';
-    todo.appendChild(pastDueMarker);
+    todoContainer.appendChild(pastDueMarker);
   }
 
   const deleteButton = new Image();
@@ -130,11 +131,11 @@ export default function createTodo(listOfLists, task) {
   deleteButton.addEventListener('click', e => {
     let page = document.querySelector('.page')
     document.body.removeChild(page)
-    listOfLists.deleteItem(task.parentList, task.id);
+    listOfLists.deleteTodo(todo.parentList, todo.id);
     if (page.classList.contains('allLists-page')) {
       page = buildAllListsPage(listOfLists)
     } else if (page.classList.contains('userList-page')) {
-      page = buildUserListPage(listOfLists, task.parentList)
+      page = buildUserListPage(listOfLists, todo.parentList)
     } else if (page.classList.contains('today-page')) {
         page = buildTodayPage(listOfLists)
     } else if (page.classList.contains('week-page')) {
@@ -145,14 +146,14 @@ export default function createTodo(listOfLists, task) {
     document.body.appendChild(page)
   });
 
-  const buttons = document.createElement('div');
-  buttons.classList.add('button-container');
-  buttons.appendChild(addNoteButton);
-  buttons.appendChild(urgent);
-  buttons.appendChild(deleteButton);
+  const buttonContainer = document.createElement('div');
+  buttonContainer.classList.add('button-container');
+  buttonContainer.appendChild(addNoteButton);
+  buttonContainer.appendChild(urgent);
+  buttonContainer.appendChild(deleteButton);
 
-  todo.appendChild(title);
-  todo.appendChild(dates);
-  todo.appendChild(buttons);
-  return todo
+  todoContainer.appendChild(title);
+  todoContainer.appendChild(datesContainer);
+  todoContainer.appendChild(buttonContainer);
+  return todoContainer
 }

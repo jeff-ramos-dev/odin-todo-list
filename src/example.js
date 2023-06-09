@@ -7,10 +7,10 @@ export default function createExample() {
     if (i > 0) {
       list.createNewList();
       let currListName = `My List ${i + 1}`;
-      list.deleteItem(currListName, 0);
+      list.deleteTodo(currListName, 0);
       for (let j = 0; j < 5; j++) {
-        list.addItem(currListName);
-        list.updateItem(
+        list.addTodo(currListName);
+        list.updateTodo(
           currListName,
           j,
           `My Title ${j + 1}`,
@@ -23,7 +23,7 @@ export default function createExample() {
     };
   };
 
-  list.updateItem(
+  list.updateTodo(
     "My List 2",
     3,
     "This is a longer title, maybe someone would write a todo this long?",
@@ -32,7 +32,7 @@ export default function createExample() {
     true,
     true
   );
-  list.updateItem(
+  list.updateTodo(
     "My List 3",
     3,
     "Different Title",

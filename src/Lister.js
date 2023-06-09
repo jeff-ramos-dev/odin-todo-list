@@ -36,11 +36,11 @@ export default function Lister() {
     let todayList = []
     const today = new Date()
     for (const list in todoLists) {
-      let numOfItems = todoLists[list].length
-      for (let i = 0; i < numOfItems; i++) {
-        const currItem = todoLists[list][i]
-        if (differenceInCalendarDays(currItem.dueDate, today) === 0) {
-          todayList.push(currItem)
+      let numOfTodos = todoLists[list].length
+      for (let i = 0; i < numOfTodos; i++) {
+        const currTodo = todoLists[list][i]
+        if (differenceInCalendarDays(currTodo.dueDate, today) === 0) {
+          todayList.push(currTodo)
         }
       }
     }
@@ -52,11 +52,11 @@ export default function Lister() {
     let weekList = []
     const today = new Date()
     for (const list in todoLists) {
-      let numOfItems = todoLists[list].length
-      for (let i = 0; i < numOfItems; i++) {
-        const currItem = todoLists[list][i]
-        if (differenceInCalendarWeeks(currItem.dueDate, today) === 0) {
-          weekList.push(currItem);
+      let numOfTodos = todoLists[list].length
+      for (let i = 0; i < numOfTodos; i++) {
+        const currTodo = todoLists[list][i]
+        if (differenceInCalendarWeeks(currTodo.dueDate, today) === 0) {
+          weekList.push(currTodo);
         }
       }
     }
@@ -68,11 +68,11 @@ export default function Lister() {
     let monthList = []
     const today = new Date()
     for (const list in todoLists) {
-      let numOfItems = todoLists[list].length
-      for (let i = 0; i < numOfItems; i++) {
-        const currItem = todoLists[list][i]
-        if (differenceInCalendarMonths(currItem.dueDate, today) === 0) {
-          monthList.push(currItem)
+      let numOfTodos = todoLists[list].length
+      for (let i = 0; i < numOfTodos; i++) {
+        const currTodo = todoLists[list][i]
+        if (differenceInCalendarMonths(currTodo.dueDate, today) === 0) {
+          monthList.push(currTodo)
         }
       }
     }
@@ -109,9 +109,9 @@ export default function Lister() {
     return "List created successfully"
   }
 
-  const addItem = (listName) => {
+  const addTodo = (listName) => {
     const uniqueId = uuidv4()
-    const item = {
+    const newTodo = {
       "id": uniqueId,
       "title": "My Title",
       "description": "My Description",
@@ -121,49 +121,49 @@ export default function Lister() {
       "parentList": listName
     }
 
-    todoLists[listName].push(item)
+    todoLists[listName].push(newTodo)
 
     return "Item added successfully"
   }
 
-  const updateTitle = (item, newTitle) => {
-    item.title = newTitle
+  const updateTitle = (todo, newTitle) => {
+    todo.title = newTitle
 
     return 'Title updated successfully'
   }
 
-  const updateDescription = (item, newDesc) => {
-    item.description = newDesc
+  const updateDescription = (todo, newDesc) => {
+    todo.description = newDesc
 
     return 'Description updated successfully'
   }
 
-  const updateDueDate = (item, newDate) => {
-    item.dueDate = newDate
+  const updateDueDate = (todo, newDate) => {
+    todo.dueDate = newDate
 
     return 'Date updated successfully'
   }
 
-  const updatePriority = (item, newPriority) => {
-    item.urgent = newPriority
+  const updateUrgency = (todo, newUrgency) => {
+    todo.urgent = newUrgency 
 
-    return 'Priority updated successfully'
+    return 'Urgency updated successfully'
   }
 
-  const updateComplete = (item, newComplete) => {
-    item.complete = newComplete
+  const updateCompletion = (todo, newCompletion) => {
+    todo.complete = newCompletion
 
-    return 'Complete updated successfully'
+    return 'Completion updated successfully'
   }
 
 
-  const updateItem = (
+  const updateTodo = (
     listName,
     index,
     title = todoLists[listName][index].title,
     description = todoLists[listName][index].description,
     dueDate = todoLists[listName][index].dueDate,
-    priority = todoLists[listName][index].urgent,
+    urgent = todoLists[listName][index].urgent,
     complete = todoLists[listName][index].complete
   ) => {
     todoLists[listName][index] = {
@@ -171,22 +171,22 @@ export default function Lister() {
       "title": title,
       "description": description,
       "dueDate": dueDate,
-      "urgent": priority,
+      "urgent": urgent,
       "complete": complete,
       "parentList": listName
     }
 
-    return 'Item updated successfully'
+    return 'Todo updated successfully'
   }
 
-  const deleteItem = (listName, id) => {
-    for (const item in todoLists[listName]) {
-      if (todoLists[listName][item].id === id) {
-        todoLists[listName].splice(item, 1)
+  const deleteTodo = (listName, id) => {
+    for (const index in todoLists[listName]) {
+      if (todoLists[listName][index].id === id) {
+        todoLists[listName].splice(index, 1)
       }
     }
 
-    return 'Item deleted successfully'
+    return 'Todo deleted successfully'
   }
 
   const deleteList = (listName) => {
@@ -201,14 +201,14 @@ export default function Lister() {
     getMonthList,
     getWeekList,
     createNewList,
-    addItem,
-    updateItem,
+    addTodo,
+    updateTodo,
     updateTitle,
     updateDescription,
     updateDueDate,
-    updatePriority,
-    updateComplete,
-    deleteItem,
+    updateUrgency,
+    updateCompletion,
+    deleteTodo,
     deleteList,
   }
 }

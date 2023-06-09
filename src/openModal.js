@@ -1,4 +1,4 @@
-export default function openModal(listOfLists, task) {
+export default function openModal(listOfLists, todo) {
   const modal = document.createElement('div');
   modal.classList.add('modal')
   const innerModal = document.createElement('div');
@@ -7,34 +7,34 @@ export default function openModal(listOfLists, task) {
   const todoNote = document.createElement('p');
   todoNote.classList.add('todoNote');
   todoNote.contentEditable = true
-  todoNote.textContent = task.description
+  todoNote.textContent = todo.description
 
-  const okay = document.createElement('button');
-  okay.classList.add('okay');
-  okay.textContent = 'Okay';
+  const okayButton = document.createElement('button');
+  okayButton.classList.add('okay');
+  okayButton.textContent = 'Okay';
 
-  okay.addEventListener('click', e => {
-    listOfLists.updateDescription(task, todoNote.textContent);
+  okayButton.addEventListener('click', e => {
+    listOfLists.updateDescription(todo, todoNote.textContent);
     document.body.removeChild(modal);
   })
 
   todoNote.addEventListener('keypress', e => {
     if (e.code === 'Enter') {
-      okay.click()
+      okayButton.click()
     }
   })
 
-  const cancel = document.createElement('button');
-  cancel.classList.add('cancel');
-  cancel.textContent = 'Cancel';
-  cancel.addEventListener('click', e => {
-    todoNote.textContent = task.description
+  const cancelButton = document.createElement('button');
+  cancelButton.classList.add('cancel');
+  cancelButton.textContent = 'Cancel';
+  cancelButton.addEventListener('click', e => {
+    todoNote.textContent = todo.description
     document.body.removeChild(modal);
   })
 
   document.body.appendChild(modal);
   innerModal.appendChild(todoNote);
-  innerModal.appendChild(cancel);
-  innerModal.appendChild(okay);
+  innerModal.appendChild(cancelButton);
+  innerModal.appendChild(okayButton);
   modal.appendChild(innerModal);
 }

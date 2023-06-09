@@ -51,17 +51,17 @@ export default function buildSidebar(listOfLists) {
 
   const userLists = document.querySelector('.user-lists');
 
-  for (const list in listOfLists.getAllLists()) {
+  for (const listName in listOfLists.getAllLists()) {
     const userList = document.createElement('li');
     userList.classList.add('list');
-    userList.textContent = list;
+    userList.textContent = listName;
     userList.addEventListener('click', e => {
       document.querySelectorAll('.page').forEach(page => {
         if (page) {
           document.body.removeChild(page);
         }
       })
-      const userListPage = buildUserListPage(listOfLists, list);
+      const userListPage = buildUserListPage(listOfLists, listName);
       document.body.appendChild(userListPage);
     })
     userLists.appendChild(userList);
@@ -70,16 +70,16 @@ export default function buildSidebar(listOfLists) {
   closeBtn.addEventListener('click', e => {
     sidebar.classList.toggle('show-sidebar');
     document.body.style.marginLeft = '0';
-    document.querySelector('.menu-btn').style.marginLeft = '0';
+    document.querySelector('.sidebar-btn').style.marginLeft = '0';
     document.querySelector('.header-title').style.transform = 'translateX(0)';
   });
 
   document.addEventListener('click', e => {
     if (!sidebar.contains(e.target) &&
-      !e.target.classList.contains('menu-btn') &&
+      !e.target.classList.contains('sidebar-btn') &&
       sidebar.classList.contains('show-sidebar')) {
       sidebar.classList.toggle('show-sidebar');
-      document.querySelector('.menu-btn').style.marginLeft = '0';
+      document.querySelector('.sidebar-btn').style.marginLeft = '0';
       document.body.style.marginLeft = '0';
       document.querySelector('.header-title').style.transform = 'translateX(0)';
     }

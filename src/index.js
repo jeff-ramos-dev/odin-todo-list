@@ -22,21 +22,21 @@ let allTasks = buildAllListsPage(exampleListOfLists);
 allTasks.classList.add('allTasks-page', 'page');
 allTasks.style.display = 'none';
 
-const menu = buildSidebar(exampleListOfLists);
-const menuBtn = document.querySelector('.menu-btn');
-menuBtn.src = menuIcon
+const sidebar = buildSidebar(exampleListOfLists);
+const sidebarBtn = document.querySelector('.sidebar-btn');
+sidebarBtn.src = menuIcon
 
-menuBtn.addEventListener('click', e => {
-  if (menu.classList.contains('show-sidebar')) {
+sidebarBtn.addEventListener('click', e => {
+  if (sidebar.classList.contains('show-sidebar')) {
     document.body.style.marginLeft = '0';
-    menuBtn.style.marginLeft = '0';
+    sidebarBtn.style.marginLeft = '0';
     document.querySelector('.header-title').style.transform = '';
   } else {
     document.body.style.marginLeft = '200px';
-    menuBtn.style.marginLeft = '200px';
+    sidebarBtn.style.marginLeft = '200px';
     document.querySelector('.header-title').style.transform = 'translateX(-50%)';
   }
-  menu.classList.toggle('show-sidebar');
+  sidebar.classList.toggle('show-sidebar');
 });
 
 document.addEventListener('mousedown', e => {

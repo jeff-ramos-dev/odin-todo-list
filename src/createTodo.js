@@ -2,7 +2,6 @@ import differenceInCalendarDays from "date-fns/differenceInCalendarDays";
 import deleteIcon from '../images/small-x-icon.png';
 import notepadIcon from '../images/small-notepad-icon.png';
 import exclamationIcon from '../images/small-exclamation-icon.png'
-import openModal from './openModal'
 import format from "date-fns/format";
 import { buildAllListsPage, buildUserListPage, buildTodayPage, buildWeekPage, buildMonthPage } from "./pages";
 
@@ -14,10 +13,10 @@ export default function createTodo(listOfLists, todo) {
   title.classList.add('title', 'prop');
   title.textContent = todo.title
 
-  const addNoteButton = new Image();
-  addNoteButton.src = notepadIcon
-  addNoteButton.classList.add('icon', 'note');
-  addNoteButton.addEventListener('click', e => {
+  const noteButton = new Image();
+  noteButton.src = notepadIcon
+  noteButton.classList.add('icon', 'note');
+  noteButton.addEventListener('click', e => {
     openModal(listOfLists, todo);
   })
 
@@ -26,16 +25,19 @@ export default function createTodo(listOfLists, todo) {
   const dueDate = document.createElement('p');
   dueDate.classList.add('date', 'prop');
   dueDate.textContent = format(todo.dueDate, 'eee MMM d yyy');
+
+
+  const datePicker = document.createElement('input');
+  datePicker.classList.add('date-picker');
+  datePicker.type = 'date';
+  datePicker.style.display = 'none';
+
   dueDate.addEventListener('click', e => {
     dueDate.style.display = 'none';
     datePicker.style.display = 'block';
     datePicker.value = format(todo.dueDate, `yyy-LL-dd`)
   })
 
-  const datePicker = document.createElement('input');
-  datePicker.classList.add('date-picker');
-  datePicker.type = 'date';
-  datePicker.style.display = 'none';
   datePicker.addEventListener('change', e => {
     const year = e.target.value.split('-')[0]
     const month = (parseInt(e.target.value.split('-')[1]) - 1).toString()
@@ -48,40 +50,30 @@ export default function createTodo(listOfLists, todo) {
     if (todoContainer.querySelector('.marker')) {
       todoContainer.removeChild(todoContainer.querySelector('.marker'));
     }
-    if (differenceInCalendarDays(todo.dueDate, today) === 0) {
-      const todayMarker = document.createElement('p');
-      todayMarker.classList.add('marker');
-      todayMarker.textContent = 'Today';
-      todoContainer.appendChild(todayMarker);
-    } else if (
-      differenceInCalendarDays(todo.dueDate, today) < 0 &&
-      !todo.complete
-    ) {
-      const pastDueMarker = document.createElement('p');
-      pastDueMarker.classList.add('marker', 'past-due');
-      pastDueMarker.textContent = 'Past Due';
-      todoContainer.appendChild(pastDueMarker);
+    const marker = createMarker(todo)
+    if (marker) {
+      todoContainer.appendChild(marker);
     }
   })
 
   datesContainer.appendChild(dueDate);
   datesContainer.appendChild(datePicker);
 
-  const urgent = new Image()
-  urgent.src = exclamationIcon
-  urgent.classList.add('icon', 'priority');
+  const urgentIcon = new Image()
+  urgentIcon.src = exclamationIcon
+  urgentIcon.classList.add('icon', 'priority');
 
-  urgent.addEventListener('click', e => {
+  urgentIcon.addEventListener('click', e => {
     listOfLists.updateUrgency(todo, !todo.urgent)
     todoContainer.classList.toggle('urgent');
-    urgent.classList.toggle('colored');
+    urgentIcon.classList.toggle('colored');
   })
 
   todoContainer.style.backgroundColor = todo.complete ? '#0f6e22' : '#7a0610';
 
   if (todo.urgent) {
     todoContainer.classList.add('urgent');
-    urgent.classList.add('colored');
+    urgentIcon.classList.add('colored');
   }
 
   todoContainer.addEventListener('click', e => {
@@ -108,21 +100,9 @@ export default function createTodo(listOfLists, todo) {
     }
   })
 
-  const today = new Date();
-
-  if (differenceInCalendarDays(todo.dueDate, today) === 0) {
-    const todayMarker = document.createElement('p');
-    todayMarker.classList.add('marker');
-    todayMarker.textContent = 'Today';
-    todoContainer.appendChild(todayMarker);
-  } else if (
-    differenceInCalendarDays(todo.dueDate, today) < 0 &&
-    !todo.complete
-  ) {
-    const pastDueMarker = document.createElement('p');
-    pastDueMarker.classList.add('marker', 'past-due');
-    pastDueMarker.textContent = 'Past Due';
-    todoContainer.appendChild(pastDueMarker);
+  const marker = createMarker(todo)
+  if (marker) {
+    todoContainer.appendChild(marker);
   }
 
   const deleteButton = new Image();
@@ -148,12 +128,71 @@ export default function createTodo(listOfLists, todo) {
 
   const buttonContainer = document.createElement('div');
   buttonContainer.classList.add('button-container');
-  buttonContainer.appendChild(addNoteButton);
-  buttonContainer.appendChild(urgent);
+  buttonContainer.appendChild(noteButton);
+  buttonContainer.appendChild(urgentIcon);
   buttonContainer.appendChild(deleteButton);
 
   todoContainer.appendChild(title);
   todoContainer.appendChild(datesContainer);
   todoContainer.appendChild(buttonContainer);
   return todoContainer
+}
+
+function createMarker(todo) {
+  const today = new Date()
+  if (differenceInCalendarDays(todo.dueDate, today) === 0) {
+    const todayMarker = document.createElement('p');
+    todayMarker.classList.add('marker');
+    todayMarker.textContent = 'Today';
+    return todayMarker
+  } else if (
+    differenceInCalendarDays(todo.dueDate, today) < 0 &&
+    !todo.complete
+  ) {
+    const pastDueMarker = document.createElement('p');
+    pastDueMarker.classList.add('marker', 'past-due');
+    pastDueMarker.textContent = 'Past Due';
+    return pastDueMarker
+  }
+}
+
+function openModal(listOfLists, todo) {
+  const modal = document.createElement('div');
+  modal.classList.add('modal')
+  const innerModal = document.createElement('div');
+  innerModal.classList.add('inner-modal');
+  
+  const todoNote = document.createElement('p');
+  todoNote.classList.add('todoNote');
+  todoNote.contentEditable = true
+  todoNote.textContent = todo.description
+
+  const okayButton = document.createElement('button');
+  okayButton.classList.add('okay');
+  okayButton.textContent = 'Okay';
+
+  okayButton.addEventListener('click', e => {
+    listOfLists.updateDescription(todo, todoNote.textContent);
+    document.body.removeChild(modal);
+  })
+
+  todoNote.addEventListener('keypress', e => {
+    if (e.code === 'Enter') {
+      okayButton.click()
+    }
+  })
+
+  const cancelButton = document.createElement('button');
+  cancelButton.classList.add('cancel');
+  cancelButton.textContent = 'Cancel';
+  cancelButton.addEventListener('click', e => {
+    todoNote.textContent = todo.description
+    document.body.removeChild(modal);
+  })
+
+  document.body.appendChild(modal);
+  innerModal.appendChild(todoNote);
+  innerModal.appendChild(cancelButton);
+  innerModal.appendChild(okayButton);
+  modal.appendChild(innerModal);
 }

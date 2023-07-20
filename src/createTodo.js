@@ -20,6 +20,24 @@ export default function createTodo(listOfLists, todo) {
     openModal(listOfLists, todo);
   })
 
+  function updateDate() {
+    const year = datePicker.value.split('-')[0];
+    const month = (parseInt(datePicker.value.split('-')[1]) - 1).toString();
+    const day = datePicker.value.split('-')[2];
+    console.log(`${year}-${month}-${day}`);
+    listOfLists.updateDueDate(todo, new Date(year, month, day));
+    dueDate.textContent = format(todo.dueDate, 'eee MMM d yyy');
+    datePicker.style.display = 'none';
+    dueDate.style.display = 'block';
+    if (todoContainer.querySelector('.marker')) {
+      todoContainer.removeChild(todoContainer.querySelector('.marker'));
+    };
+    const marker = createMarker(todo);
+    if (marker) {
+      todoContainer.appendChild(marker);
+    };
+  };
+
   const datesContainer = document.createElement('div');
 
   const dueDate = document.createElement('p');
@@ -35,59 +53,59 @@ export default function createTodo(listOfLists, todo) {
   dueDate.addEventListener('click', e => {
     dueDate.style.display = 'none';
     datePicker.style.display = 'block';
-    datePicker.value = format(todo.dueDate, `yyy-LL-dd`)
+    datePicker.value = format(todo.dueDate, `yyy-LL-dd`);
+  });
+
+  window.addEventListener('click', (e) => {
+    if (datePicker.style.display === 'block' && e.target !== datePicker && e.target !== dueDate) {
+      updateDate();
+    };
+  });
+
+  datePicker.addEventListener('keydown', (e) => {
+    if (e.code === 'Enter') {
+      updateDate();
+    }
   })
 
-  datePicker.addEventListener('change', e => {
-    const year = e.target.value.split('-')[0]
-    const month = (parseInt(e.target.value.split('-')[1]) - 1).toString()
-    const day = e.target.value.split('-')[2]
-    console.log(`${year}-${month}-${day}`);
-    listOfLists.updateDueDate(todo, new Date(year, month, day));
-    dueDate.textContent = format(todo.dueDate, 'eee MMM d yyy');
-    datePicker.style.display = 'none';
-    dueDate.style.display = 'block';
-    if (todoContainer.querySelector('.marker')) {
-      todoContainer.removeChild(todoContainer.querySelector('.marker'));
-    }
-    const marker = createMarker(todo)
-    if (marker) {
-      todoContainer.appendChild(marker);
-    }
-  })
+  datePicker.addEventListener('close', e => {
+    updateDate();
+  });
+
 
   datesContainer.appendChild(dueDate);
   datesContainer.appendChild(datePicker);
 
-  const urgentIcon = new Image()
-  urgentIcon.src = exclamationIcon
+  const urgentIcon = new Image();
+  urgentIcon.src = exclamationIcon;
   urgentIcon.classList.add('icon', 'priority');
 
   urgentIcon.addEventListener('click', e => {
-    listOfLists.updateUrgency(todo, !todo.urgent)
+    listOfLists.updateUrgency(todo, !todo.urgent);
     todoContainer.classList.toggle('urgent');
     urgentIcon.classList.toggle('colored');
-  })
+  });
 
   todoContainer.style.backgroundColor = todo.complete ? '#0f6e22' : '#7a0610';
 
   if (todo.urgent) {
     todoContainer.classList.add('urgent');
     urgentIcon.classList.add('colored');
-  }
+  };
 
   todoContainer.addEventListener('click', e => {
     if (e.target.localName === 'p' && !e.target.classList.contains('title') ||
       e.target.localName === 'input' ||
       e.target.localName === 'img') {
-      return
-    }
+      return;
+    };
 
-    listOfLists.updateCompletion(todo, !todo.complete)
-    todoContainer.style.backgroundColor = todo.complete ? '#0f6e22' : '#7a0610'
+    listOfLists.updateCompletion(todo, !todo.complete);
+    todoContainer.style.backgroundColor = todo.complete ? '#0f6e22' : '#7a0610';
+    const today = new Date();
 
     if (todoContainer.querySelector('.past-due') && todo.complete) {
-      todoContainer.removeChild(todoContainer.querySelector('.past-due'))
+      todoContainer.removeChild(todoContainer.querySelector('.past-due'));
     } else if (
       !todoContainer.querySelector('.past-due') &&
       !todo.complete &&
@@ -97,33 +115,33 @@ export default function createTodo(listOfLists, todo) {
       pastDueMarker.classList.add('marker', 'past-due');
       pastDueMarker.textContent = 'Past Due';
       todoContainer.appendChild(pastDueMarker);
-    }
-  })
+    };
+  });
 
-  const marker = createMarker(todo)
+  const marker = createMarker(todo);
   if (marker) {
     todoContainer.appendChild(marker);
-  }
+  };
 
   const deleteButton = new Image();
-  deleteButton.src = deleteIcon
+  deleteButton.src = deleteIcon;
   deleteButton.classList.add('delete', 'icon');
   deleteButton.addEventListener('click', e => {
-    let page = document.querySelector('.page')
-    document.body.removeChild(page)
+    let page = document.querySelector('.page');
+    document.body.removeChild(page);
     listOfLists.deleteTodo(todo.parentList, todo.id);
     if (page.classList.contains('allLists-page')) {
-      page = buildAllListsPage(listOfLists)
+      page = buildAllListsPage(listOfLists);
     } else if (page.classList.contains('userList-page')) {
-      page = buildUserListPage(listOfLists, todo.parentList)
+      page = buildUserListPage(listOfLists, todo.parentList);
     } else if (page.classList.contains('today-page')) {
-        page = buildTodayPage(listOfLists)
+        page = buildTodayPage(listOfLists);
     } else if (page.classList.contains('week-page')) {
-        page = buildMonthPage(listOfLists)
+        page = buildMonthPage(listOfLists);
     } else if (page.classList.contains('month-page')) {
-        page = buildMonthPage(listOfLists)
-    }
-    document.body.appendChild(page)
+        page = buildMonthPage(listOfLists);
+    };
+    document.body.appendChild(page);
   });
 
   const buttonContainer = document.createElement('div');
@@ -135,16 +153,16 @@ export default function createTodo(listOfLists, todo) {
   todoContainer.appendChild(title);
   todoContainer.appendChild(datesContainer);
   todoContainer.appendChild(buttonContainer);
-  return todoContainer
+  return todoContainer;
 }
 
 function createMarker(todo) {
-  const today = new Date()
+  const today = new Date();
   if (differenceInCalendarDays(todo.dueDate, today) === 0) {
     const todayMarker = document.createElement('p');
     todayMarker.classList.add('marker');
     todayMarker.textContent = 'Today';
-    return todayMarker
+    return todayMarker;
   } else if (
     differenceInCalendarDays(todo.dueDate, today) < 0 &&
     !todo.complete
@@ -152,20 +170,20 @@ function createMarker(todo) {
     const pastDueMarker = document.createElement('p');
     pastDueMarker.classList.add('marker', 'past-due');
     pastDueMarker.textContent = 'Past Due';
-    return pastDueMarker
-  }
-}
+    return pastDueMarker;
+  };
+};
 
 function openModal(listOfLists, todo) {
   const modal = document.createElement('div');
-  modal.classList.add('modal')
+  modal.classList.add('modal');
   const innerModal = document.createElement('div');
   innerModal.classList.add('inner-modal');
   
   const todoNote = document.createElement('p');
   todoNote.classList.add('todoNote');
-  todoNote.contentEditable = true
-  todoNote.textContent = todo.description
+  todoNote.contentEditable = true;
+  todoNote.textContent = todo.description;
 
   const okayButton = document.createElement('button');
   okayButton.classList.add('okay');
@@ -174,21 +192,21 @@ function openModal(listOfLists, todo) {
   okayButton.addEventListener('click', e => {
     listOfLists.updateDescription(todo, todoNote.textContent);
     document.body.removeChild(modal);
-  })
+  });
 
   todoNote.addEventListener('keypress', e => {
     if (e.code === 'Enter') {
-      okayButton.click()
-    }
-  })
+      okayButton.click();
+    };
+  });
 
   const cancelButton = document.createElement('button');
   cancelButton.classList.add('cancel');
   cancelButton.textContent = 'Cancel';
   cancelButton.addEventListener('click', e => {
-    todoNote.textContent = todo.description
+    todoNote.textContent = todo.description;
     document.body.removeChild(modal);
-  })
+  });
 
   document.body.appendChild(modal);
   innerModal.appendChild(todoNote);

@@ -12,7 +12,7 @@ body {
   transition: margin-left 0.4s;
 }
 
-header {
+.header {
   background: grey;
   height: 100px;
   width: 100%;
@@ -21,7 +21,7 @@ header {
   place-items: center;
   margin-bottom: 10px;
   z-index: 1;
-  border: 2px solid red;
+  transition: all 0.4s;
 }
 
 .todo {

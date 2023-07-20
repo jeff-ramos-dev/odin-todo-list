@@ -29,12 +29,13 @@ sidebarBtn.src = menuIcon
 sidebarBtn.addEventListener('click', e => {
   if (sidebar.classList.contains('show-sidebar')) {
     document.body.style.marginLeft = '0';
+    document.querySelector('.header').style.width = '100vw';
     sidebarBtn.style.marginLeft = '0';
     document.querySelector('.header-title').style.transform = '';
   } else {
     document.body.style.marginLeft = '200px';
+    document.querySelector('.header').style.width = 'calc(100vw - 200px)';
     sidebarBtn.style.marginLeft = '200px';
-    document.querySelector('.header-title').style.transform = 'translateX(-50%)';
   }
   sidebar.classList.toggle('show-sidebar');
 });

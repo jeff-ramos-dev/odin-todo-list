@@ -71,7 +71,7 @@ export default function buildSidebar(listOfLists) {
     sidebar.classList.toggle('show-sidebar');
     document.body.style.marginLeft = '0';
     document.querySelector('.sidebar-btn').style.marginLeft = '0';
-    document.querySelector('.header-title').style.transform = 'translateX(0)';
+    document.querySelector('.header').style.width = '100vw';
   });
 
   document.addEventListener('click', e => {
@@ -81,7 +81,7 @@ export default function buildSidebar(listOfLists) {
       sidebar.classList.toggle('show-sidebar');
       document.querySelector('.sidebar-btn').style.marginLeft = '0';
       document.body.style.marginLeft = '0';
-      document.querySelector('.header-title').style.transform = 'translateX(0)';
+      document.querySelector('.header').style.width = '100vw';
     }
   })
 

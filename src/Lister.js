@@ -7,17 +7,17 @@ import { v4 as uuidv4 } from 'uuid'
 export default function Lister() {
 
   const todoLists = {
-    "My List": [
-      {
-        "id": 1234,
-        "title": "My Title",
-        "description": "My Description",
-        "dueDate": new Date(),
-        "urgent": false,
-        "complete": false,
-        "parentList": "My List"
-      },
-    ]
+    // "My List": [
+    //   {
+    //     "id": 1234,
+    //     "title": "My Title",
+    //     "description": "My Description",
+    //     "dueDate": new Date(),
+    //     "urgent": false,
+    //     "complete": false,
+    //     "parentList": "My List"
+    //   },
+    // ]
   }
 
   function compare(date1, date2) {
@@ -121,7 +121,12 @@ export default function Lister() {
       "parentList": listName
     }
 
-    todoLists[listName].push(newTodo)
+    if (todoLists[listName]) {
+      todoLists[listName].push(newTodo);
+    } else {
+      todoLists[listName] = [];
+      todoLists[listName].push(newTodo);
+    }
 
     return "Item added successfully"
   }

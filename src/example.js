@@ -1,4 +1,5 @@
 import Lister from './Lister'
+import { set } from 'date-fns'
 
 export default function createExample() {
   const list = Lister();
@@ -15,7 +16,7 @@ export default function createExample() {
           j,
           `My Title ${j + 1}`,
           `My Description ${j + 1}`,
-          new Date(2023, 5, j + 6),
+          set(new Date(), {date: new Date().getDate() + j}),
           false,
           false,
         );
@@ -28,7 +29,7 @@ export default function createExample() {
     3,
     "This is a longer title, maybe someone would write a todo this long?",
     "Different Description",
-    new Date(2023, 6, 6),
+    set(new Date(), {month: new Date().getMonth() + 1}),
     true,
     true
   );
@@ -37,7 +38,7 @@ export default function createExample() {
     3,
     "Different Title",
     "Different Description",
-    new Date(2023, 5, 6),
+    set(new Date(), {date: new Date().getDate() + 7}),
     true,
     true
   );
